@@ -7,6 +7,11 @@
 
 import Foundation
 
+protocol ApiClientProtocol {
+    func load<T: Codable>(_ resource: Resource<T>) async throws -> T
+}
+
+
 struct Resource<T: Codable> {
     //url that we are sending the request to
     let url: URL?
@@ -21,7 +26,7 @@ struct Resource<T: Codable> {
     var modelType: T.Type
 }
 
-struct ApiClient {
+struct ApiClient: ApiClientProtocol {
     private let session: URLSession
     
     init() {
