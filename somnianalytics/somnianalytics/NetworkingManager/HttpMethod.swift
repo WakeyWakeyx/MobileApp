@@ -8,11 +8,24 @@
 import Foundation
 
 //This just represents the http methods that are supported by the networking manager, 
-enum HttpMethods: String {
-    case get = "GET"
-    case post = "POST"
-    case put = "PUT"
-    case delete = "DELETE"
+enum HttpMethods {
+    case get([URLQueryItem])
+    case post(Data?)
+    case put(Data?)
+    case delete
+    
+    var name: String {
+        switch self {
+            case .get:
+                return "GET"
+            case .post:
+                return "POST"
+            case .put:
+                return "PUT"
+            case .delete:
+                return "DELETE"
+        }
+    }
 }
 
 
