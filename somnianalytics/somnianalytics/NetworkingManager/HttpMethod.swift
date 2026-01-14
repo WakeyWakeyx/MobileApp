@@ -10,8 +10,8 @@ import Foundation
 //This just represents the http methods that are supported by the networking manager, 
 enum HttpMethods {
     case get([URLQueryItem])
-    case post(Data?)
-    case put(Data?)
+    case post(any Codable)
+    case put(any Codable)
     case delete
     
     var name: String {

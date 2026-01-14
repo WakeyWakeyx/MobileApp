@@ -10,8 +10,8 @@ import Foundation
 //This file is built to handle the JWT token management for the app
 protocol TokenProviderProtocol {
     func getToken() -> String?
-    func clearToken() -> Void
-    func setToken(_ token: String) -> Void
+    func clearToken()
+    func setToken(_ token: String)
 }
 
 // TODO: Need to finish making this

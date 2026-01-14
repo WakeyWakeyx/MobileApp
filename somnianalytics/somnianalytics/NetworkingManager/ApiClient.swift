@@ -14,7 +14,7 @@ protocol ApiClientProtocol {
 
 struct Resource<T: Codable> {
     //url that we are sending the request to
-    let url: URL?
+    let url: URL
     
     //defaults to get request
     var method: HttpMethods = .get([])
@@ -22,8 +22,6 @@ struct Resource<T: Codable> {
     //headers of the request
     var headers: [String: String]? = nil
     
-    //the type of the data that we are working with
-    var modelType: T.Type
 }
 
 struct ApiClient: ApiClientProtocol {
@@ -31,28 +29,34 @@ struct ApiClient: ApiClientProtocol {
     
     init() {
         let configuration = URLSessionConfiguration.default
-        configuration.httpAdditionalHeaders = ["Content-Type": "application/json"]
+        configuration.httpAdditionalHeaders = [
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        ]
         self.session = URLSession(configuration: configuration) //making sure that we are always using the json header as the content type
     }
     
     
     func load<T: Codable>(_ resource: Resource<T>) async throws -> T {
-        guard let confirmedURL = resource.url else {
-            throw NetworkErrors.invalidURL
-        }
-        var request = URLRequest(url: confirmedURL)
+        var request = URLRequest(url: resource.url)
         
-        //can add headers over here to the request if we have any
+        //adding additional headers to the request if we have any, and also making sure to not overwrite the previous headers that we added by default
         if let headers = resource.headers{
             for (key, value) in headers {
-                request.setValue(value, forHTTPHeaderField: key)
+                if request.value(forHTTPHeaderField: key) == nil {
+                    request.setValue(value, forHTTPHeaderField: key)
+                }
             }
         }
+        
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        encoder.keyEncodingStrategy = .convertToSnakeCase
         
         // set the http body if needed
         switch resource.method {
             case .get(let queryItems):
-                var components = URLComponents(url: confirmedURL, resolvingAgainstBaseURL: false)
+            var components = URLComponents(url: resource.url, resolvingAgainstBaseURL: false)
                 components?.queryItems = queryItems
             
                 guard let url = components?.url else {
@@ -60,9 +64,10 @@ struct ApiClient: ApiClientProtocol {
                 }
             
                 request.url = url
+                request.httpMethod = resource.method.name
             case .post(let data), .put(let data):
                 request.httpMethod = resource.method.name
-                request.httpBody = data
+                request.httpBody = try encoder.encode(data)
             case .delete:
                 request.httpMethod = resource.method.name
         }
@@ -87,7 +92,7 @@ struct ApiClient: ApiClientProtocol {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
             decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let result = try decoder.decode(resource.modelType, from: data)
+            let result = try decoder.decode(T.self, from: data)
             return result
         } catch {
             throw NetworkErrors.decodingError(error)
