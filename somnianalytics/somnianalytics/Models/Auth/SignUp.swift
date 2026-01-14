@@ -17,5 +17,5 @@ struct SignUpRequest: Codable {
 
 // TODO: Need to finish the sign up response and add the fields to it
 struct SignUpResponse: Codable {
-    let accessToken: String
+    let jwtToken: String
 }
