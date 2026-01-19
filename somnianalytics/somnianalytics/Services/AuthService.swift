@@ -23,6 +23,6 @@ struct AuthService {
         let resource = Resource<LoginResponse>(url: confirmedURl, method: .post(loginRequest))
         let response: LoginResponse = try await apiClient.load(resource) //this is making the request here
         
-        try keychainManager.save(response.accessToken, for: KeyChainKeys.jwttoken, service: KeyChainServices., account: response.nameOfUser)
+        try keychainManager.save(response.accessToken, for: KeyChainKeys.jwttoken, account: response.nameOfUser)
     }
 }
