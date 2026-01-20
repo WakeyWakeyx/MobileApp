@@ -21,6 +21,8 @@ enum KeyChainError: LocalizedError {
     case duplicateEntry
     case noEntryFound
     case deleteFailed
+    case saveFailed(status: OSStatus)
+    case getFailed(status: OSStatus)
     case unknownError(status: OSStatus) //need to figure out what OSStatus is
 }
 
@@ -55,14 +57,39 @@ final class KeyChainManager {
         }
         
         guard status == errSecSuccess else {
-            throw KeyChainError.unknownError(status: status)
+            throw KeyChainError.saveFailed(status: status)
         }
         
         print("saved successfully to keychain")
     }
     
-    func load<T: Codable>(_ type: T.Type, for key: KeyChainKeys) throws -> T? {
+    func get<T: Codable>(_ type: T.Type, for key: KeyChainKeys, account: String) throws -> T? {
         // service, account, class, return-data, matchlimit
+        
+        // making the query for looking up the key here
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrAccount as String: account,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecReturnData as String: kCFBooleanTrue
+        ]
+        
+        
+        // doing the lookup here
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        
+        
+        // checking for errors here
+        guard status != errSecItemNotFound else { throw KeyChainError.noEntryFound }
+        guard status == errSecSuccess else { throw KeyChainError.getFailed(status: status) }
+        
+        // extracting data here
+        
+        
+        
+        
     }
     
     func delete(for key: KeyChainKeys) throws {
