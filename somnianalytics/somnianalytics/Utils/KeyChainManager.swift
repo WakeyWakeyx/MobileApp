@@ -30,6 +30,7 @@ enum KeyChainError: LocalizedError {
 // TODO: build out the functionality of this, needs a set token, get token, and delete token method
 final class KeyChainManager {
     private let service = "com.somni.somnianalytics"
+    
     func save<T: Codable>(_ value: T, for key: KeyChainKeys, account: String) throws {
         let data = try JSONEncoder().encode(value)
         
@@ -37,7 +38,7 @@ final class KeyChainManager {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
-            kSecAttrAccount as String: account,
+            kSecAttrAccount as String: key.rawValue,
             kSecValueData as String: value
         ]
         
@@ -64,42 +65,60 @@ final class KeyChainManager {
         print("saved successfully to keychain")
     }
     
-    func get<T: Codable>(for key: KeyChainKeys, account: String) throws -> T? {
+    func get<T: Codable>(for key: KeyChainKeys) throws -> T? {
         // making the query for looking up the key here
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
-            kSecAttrAccount as String: account,
+            kSecAttrAccount as String: key.rawValue,
             kSecMatchLimit as String: kSecMatchLimitOne,
             kSecReturnData as String: kCFBooleanTrue
         ]
         
-        
         // doing the lookup here
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
-        
         
         // checking for errors here
         guard status != errSecItemNotFound else { throw KeyChainError.noEntryFound }
         guard status == errSecSuccess else { throw KeyChainError.getFailed(status: status) }
         
         // extracting data here
-        guard let existingItem = result as? [String: Any],
-              let data = existingItem[kSecValueData as String] as? Data,
-              let decodedObject = String(data: data, encoding: String.Encoding.utf8),
-              let account = existingItem[kSecAttrAccount as String] as? String
+        guard let existingItem = result as? Data
         else {
             throw KeyChainError.unexpectedDataRetrieved
         }
         
-        // TODO: Need to make the return type for this function and decide whether or not to take anything in with the generics or not
-    
-        
+        return try JSONDecoder().decode(T.self, from: existingItem)
     }
     
     func delete(for key: KeyChainKeys) throws {
-        <#code#>
+        // building query here
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key.rawValue,
+            kSecAttrService as String : service
+        ]
+        
+        // deleting the item here
+        let status = SecItemDelete(query as CFDictionary)
+        
+        // checking for errors here
+        guard status != errSecItemNotFound else {
+            print("Couldn't delete a key because the key couldn't be found.")
+            throw KeyChainError.noEntryFound
+        }
+        
+        guard status == errSecSuccess else {
+            throw KeyChainError.deleteFailed
+        }
+    }
+    
+    func update<T: Codable>(_ value: T, for key: KeyChainKeys) throws {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            
+        ]
     }
     
     
