@@ -21,6 +21,7 @@ enum KeyChainError: LocalizedError {
     case duplicateEntry
     case noEntryFound
     case deleteFailed
+    case unexpectedDataRetrieved
     case saveFailed(status: OSStatus)
     case getFailed(status: OSStatus)
     case unknownError(status: OSStatus) //need to figure out what OSStatus is
@@ -63,9 +64,7 @@ final class KeyChainManager {
         print("saved successfully to keychain")
     }
     
-    func get<T: Codable>(_ type: T.Type, for key: KeyChainKeys, account: String) throws -> T? {
-        // service, account, class, return-data, matchlimit
-        
+    func get<T: Codable>(for key: KeyChainKeys, account: String) throws -> T? {
         // making the query for looking up the key here
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -86,9 +85,16 @@ final class KeyChainManager {
         guard status == errSecSuccess else { throw KeyChainError.getFailed(status: status) }
         
         // extracting data here
+        guard let existingItem = result as? [String: Any],
+              let data = existingItem[kSecValueData as String] as? Data,
+              let decodedObject = String(data: data, encoding: String.Encoding.utf8),
+              let account = existingItem[kSecAttrAccount as String] as? String
+        else {
+            throw KeyChainError.unexpectedDataRetrieved
+        }
         
-        
-        
+        // TODO: Need to make the return type for this function and decide whether or not to take anything in with the generics or not
+    
         
     }
     
