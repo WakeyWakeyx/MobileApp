@@ -12,11 +12,6 @@ enum KeyChainKeys: String, CaseIterable {
     case jwttoken = "JWTToken"
 }
 
-enum KeyChainServices: String {
-    case somniAnalyticsApi = "somniAnalyticsApi" // will change this later when we get the api stuff figured out and get the right endpoint name
-    case unknownService = "unknownServie"
-}
-
 enum KeyChainError: LocalizedError {
     case duplicateEntry
     case noEntryFound
@@ -31,7 +26,7 @@ enum KeyChainError: LocalizedError {
 final class KeyChainManager {
     private let service = "com.somni.somnianalytics"
     
-    func save<T: Codable>(_ value: T, for key: KeyChainKeys, account: String) throws {
+    func save<T: Codable>(_ value: T, for key: KeyChainKeys) throws {
         let data = try JSONEncoder().encode(value)
         
         //building query here
@@ -39,13 +34,17 @@ final class KeyChainManager {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
             kSecAttrAccount as String: key.rawValue,
-            kSecValueData as String: value
+            kSecValueData as String: data
         ]
         
         // deleting item first before adding so we don't get a duplicate error, and so we save the most recent data
         let deleteStatus = SecItemDelete(query as CFDictionary)
         
-        guard deleteStatus != errSecSuccess else {
+        guard deleteStatus != errSecItemNotFound else {
+            throw KeyChainError.noEntryFound
+        }
+        
+        guard deleteStatus == errSecSuccess else {
             throw KeyChainError.deleteFailed
         }
         
@@ -84,12 +83,12 @@ final class KeyChainManager {
         guard status == errSecSuccess else { throw KeyChainError.getFailed(status: status) }
         
         // extracting data here
-        guard let existingItem = result as? Data
+        guard let data = result as? Data
         else {
             throw KeyChainError.unexpectedDataRetrieved
         }
         
-        return try JSONDecoder().decode(T.self, from: existingItem)
+        return try JSONDecoder().decode(T.self, from: data)
     }
     
     func delete(for key: KeyChainKeys) throws {
@@ -113,13 +112,4 @@ final class KeyChainManager {
             throw KeyChainError.deleteFailed
         }
     }
-    
-    func update<T: Codable>(_ value: T, for key: KeyChainKeys) throws {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            
-        ]
-    }
-    
-    
 }
