@@ -37,6 +37,7 @@ struct ApiClient: ApiClientProtocol {
             "Accept": "application/json"
         ]
         self.session = URLSession(configuration: configuration) //making sure that we are always using the json header as the content type
+        self.keychainManager = KeyChainManager()
     }
     
     func load<T: Codable>(_ resource: Resource<T>) async throws -> T {

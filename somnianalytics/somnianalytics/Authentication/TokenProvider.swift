@@ -9,22 +9,27 @@ import Foundation
 
 //This file is built to handle the JWT token management for the app
 protocol TokenProviderProtocol {
-    func getToken() -> String?
-    func clearToken()
-    func setToken(_ token: String)
+    func getToken() throws -> String?
+    func clearToken() throws
+    func setToken(_ token: String) throws
 }
 
-// TODO: Need to finish making this
 struct TokenProvider: TokenProviderProtocol {
-    func getToken() -> String? {
-        <#code#>
+    private let keychainManager: KeyChainManager
+    
+    init(keychainManager: KeyChainManager) {
+        self.keychainManager = keychainManager
     }
     
-    func clearToken() {
-        <#code#>
+    func getToken() throws ->  String? {
+        try keychainManager.get(for: KeyChainKeys.jwttoken)
     }
     
-    func setToken(_ token: String) {
-        <#code#>
+    func clearToken() throws {
+        try keychainManager.delete(for: KeyChainKeys.jwttoken)
+    }
+    
+    func setToken(_ token: String) throws {
+        try keychainManager.save(token, for: KeyChainKeys.jwttoken)
     }
 }
