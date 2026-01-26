@@ -11,6 +11,7 @@ import Foundation
 enum NetworkErrors: Error {
     case invalidURL
     case invalidResponse
+    case authError(Error)
     case errorResponse(ErrorResponse)
     case decodingError(Error)
 }
@@ -26,6 +27,9 @@ extension NetworkErrors: LocalizedError {
             return NSLocalizedString("Error \(errorResponse.message ?? "")", comment: "Error Response")
         case .decodingError(let error):
             return NSLocalizedString("Unable to decode successfully.Error: \(error)", comment: "decodingError")
+        case .authError(let error):
+            return NSLocalizedString("Authentication failed. Please sign in again. \nError: \(error.localizedDescription)",
+                comment: "Auth Error")
         }
     }
 }

@@ -64,7 +64,7 @@ final class KeyChainManager {
         print("saved successfully to keychain")
     }
     
-    func get<T: Codable>(for key: KeyChainKeys) throws -> T? {
+    func get<T: Codable>(for key: KeyChainKeys) throws -> T {
         // making the query for looking up the key here
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,

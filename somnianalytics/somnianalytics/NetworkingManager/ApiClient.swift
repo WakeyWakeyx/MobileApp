@@ -22,10 +22,13 @@ struct Resource<T: Codable> {
     //headers of the request
     var headers: [String: String]? = nil
     
+    // this will if we need to inject the jwt token or not
+    var needsToken: Bool = false
 }
 
 struct ApiClient: ApiClientProtocol {
     private let session: URLSession
+    private let keychainManager: KeyChainManager
     
     init() {
         let configuration = URLSessionConfiguration.default
@@ -36,16 +39,23 @@ struct ApiClient: ApiClientProtocol {
         self.session = URLSession(configuration: configuration) //making sure that we are always using the json header as the content type
     }
     
-    
     func load<T: Codable>(_ resource: Resource<T>) async throws -> T {
         var request = URLRequest(url: resource.url)
         
         //adding additional headers to the request if we have any, and also making sure to not overwrite the previous headers that we added by default
-        if let headers = resource.headers{
+        if let headers = resource.headers {
             for (key, value) in headers {
-                if request.value(forHTTPHeaderField: key) == nil {
-                    request.setValue(value, forHTTPHeaderField: key)
-                }
+                request.setValue(value, forHTTPHeaderField: key)
+            }
+        }
+        
+        // Injecting token header here if we need the header
+        if resource.needsToken {
+            do {
+                let token:String = try keychainManager.get(for: KeyChainKeys.jwttoken)
+                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            } catch let error as KeyChainError {
+                throw NetworkErrors.authError(error)
             }
         }
         
@@ -56,7 +66,7 @@ struct ApiClient: ApiClientProtocol {
         // set the http body if needed
         switch resource.method {
             case .get(let queryItems):
-            var components = URLComponents(url: resource.url, resolvingAgainstBaseURL: false)
+                var components = URLComponents(url: resource.url, resolvingAgainstBaseURL: false)
                 components?.queryItems = queryItems
             
                 guard let url = components?.url else {
@@ -82,6 +92,8 @@ struct ApiClient: ApiClientProtocol {
         switch httpResponse.statusCode {
             case 200...299:
                 break //that's because this is a success so we are just breaking from the switch
+            case 401, 403:
+                throw NetworkErrors.authError(NetworkErrors.invalidResponse)
             default:
                 let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
                 throw NetworkErrors.errorResponse(errorResponse)
@@ -100,3 +112,4 @@ struct ApiClient: ApiClientProtocol {
         
     }
 }
+
