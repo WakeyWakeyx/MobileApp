@@ -9,13 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     let httpClient = ApiClient()
-    @State private var products: [Product] = []
-    // Has an example of us using the http client in here
+    
     var body: some View {
         SignUpView()
     }
 }
 
 #Preview {
-    ContentView()
+    SignUpView()
 }

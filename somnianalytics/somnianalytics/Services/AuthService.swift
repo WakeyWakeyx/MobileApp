@@ -11,12 +11,12 @@ import Foundation
 struct AuthService {
     let basePath = "/api" // not sure if this is right but might modify later
     private let apiClient: ApiClientProtocol
-    private let keychainManager = KeyChainManager()
     private let tokenProvider: TokenProvider
     private let networkHelpers: NetworkHelpers
-    init(apiClient: ApiClientProtocol, tokenProvider: TokenProvider, networkHelpers: NetworkHelpers) {
+    
+    init(apiClient: ApiClientProtocol = ApiClient(), tokenProvider: TokenProvider = TokenProvider(), networkHelpers: NetworkHelpers = NetworkHelpers()) {
         self.apiClient = apiClient
-        self.tokenProvider = TokenProvider(keychainManager: keychainManager)
+        self.tokenProvider = tokenProvider
         self.networkHelpers = networkHelpers
     }
     func loginUser(for loginRequest: LoginRequest) async throws {
@@ -29,9 +29,13 @@ struct AuthService {
         try tokenProvider.setToken(response.accessToken)
     }
     
-    // TODO: NEED TO FINISH THIS AND GET THE RIGHT URLS IN THERE 
+     
     func signUpUser(for signUpRequest: SignUpRequest) async throws {
-        let confirmedURL = try networkHelpers.confirmURL(url: "https://fakestoreapi.com/products")
+        // this url will change everytime the ngrok url changes
+        let confirmedURL = try networkHelpers.confirmURL(url: "https://wilbur-unentertained-brianna.ngrok-free.dev/api/auth/create")
+        let resource = Resource<SignUpResponse>(url: confirmedURL, method: .post(signUpRequest))
+        let response: SignUpResponse = try await apiClient.load(resource)
         
+        try tokenProvider.setToken(response.jwtToken)
     }
 }

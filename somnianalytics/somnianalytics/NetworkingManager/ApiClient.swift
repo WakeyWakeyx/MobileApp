@@ -62,7 +62,7 @@ struct ApiClient: ApiClientProtocol {
         
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
-        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.keyEncodingStrategy = .useDefaultKeys
         
         // set the http body if needed
         switch resource.method {
@@ -104,7 +104,7 @@ struct ApiClient: ApiClientProtocol {
         do {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            decoder.keyDecodingStrategy = .useDefaultKeys
             let result = try decoder.decode(T.self, from: data)
             return result
         } catch {

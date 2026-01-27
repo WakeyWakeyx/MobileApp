@@ -17,7 +17,7 @@ protocol TokenProviderProtocol {
 struct TokenProvider: TokenProviderProtocol {
     private let keychainManager: KeyChainManager
     
-    init(keychainManager: KeyChainManager) {
+    init(keychainManager: KeyChainManager = KeyChainManager()) {
         self.keychainManager = keychainManager
     }
     

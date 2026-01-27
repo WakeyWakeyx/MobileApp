@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct somnianalyticsApp: App {
+    @State private var signUpVM = AuthViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SignUpView()
+            .environment(signUpVM)
         }
     }
 }
