@@ -33,10 +33,6 @@ struct AuthService {
         let confirmedURL = try networkHelpers.confirmURL(url: "https://wilbur-unentertained-brianna.ngrok-free.dev/api/auth/create")
         let resource = Resource<SignUpResponse>(url: confirmedURL, method: .post(signUpRequest))
         let response: SignUpResponse = try await apiClient.load(resource)
-        
         try tokenProvider.setToken(response.jwtToken)
-        
-        let token = try tokenProvider.getToken()
-        print("token: \(token ?? "NO TOKEN FOUND")")
     }
 }

@@ -8,14 +8,6 @@
 import Foundation
 import Observation
 
-// Enum for the different states that will be determining the state of the authorization process
-enum AuthState {
-    case unauthenticated
-    case authenticating
-    case authenticated
-    case onboarding
-}
-
 @Observable
 class AuthViewModel {
     private let authService = AuthService()
