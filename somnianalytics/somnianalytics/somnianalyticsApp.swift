@@ -17,9 +17,12 @@ struct somnianalyticsApp: App {
                 if authVM.isAuthenticated {
                     HomeView()
                 }
-                else {
+                else if authVM.authState == .unauthenticated {
                     // TODO: WILL CHANGE THIS TO AN AUTH ENTRY VIEW
                     SignUpView()
+                }
+                else if authVM.authState == .authenticating{
+                    LoadingView()
                 }
             }
             .environment(authVM)

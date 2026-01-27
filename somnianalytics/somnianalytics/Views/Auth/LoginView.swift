@@ -53,19 +53,32 @@ struct LoginView: View {
     
     
     private var header: some View {
-        Text("Create Account")
-            .font(.largeTitle)
-            .fontWeight(.bold)
-            .padding()
+        VStack {
+            Text("Hello")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.horizontal)
+            
+            Text("Welcome Back!")
+                .font(.title2)
+                .fontWeight(.bold)
+                .padding(.horizontal)
+        }
     }
     
     @ViewBuilder
     private var textFields: some View {
         LabeledTextField(label: "Email", text: $email)
             .padding()
+            .onSubmit {
+                focusedField = .password
+            }
         
         LabeledTextField(label: "Password", text: $password, isSecure: true)
             .padding()
+            .onSubmit {
+                focusedField = .none
+            }
     }
     
     private var loginButton: some View {
@@ -89,7 +102,7 @@ struct LoginView: View {
                 }
             }
         }) {
-            Text("Sign Up")
+            Text("Login")
                 .frame(width: 252)
                 .fontWeight(.semibold)
                 .foregroundStyle(.white)

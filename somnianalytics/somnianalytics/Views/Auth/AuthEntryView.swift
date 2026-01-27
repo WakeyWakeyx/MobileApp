@@ -38,7 +38,7 @@ struct AuthEntryView: View {
     private var authFlowButtons: some View {
         VStack {
             Button(action: {
-                
+                // TODO: MAKE THIS GO TO THE SIGN IN PAGE
             }) {
                 Spacer()
                 Text("Sign In")
@@ -53,7 +53,7 @@ struct AuthEntryView: View {
             .padding()
             
             Button(action: {
-                
+                // TODO: MAKE THIS GO TO THE SIGN UP PAGE
             }) {
                 Spacer()
                 Text("Sign Up")

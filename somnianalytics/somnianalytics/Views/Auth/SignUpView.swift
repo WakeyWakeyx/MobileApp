@@ -62,15 +62,27 @@ struct SignUpView: View {
     private var textFields: some View {
         LabeledTextField(label: "Name", text: $name, placeholder: "")
             .padding()
+            .onSubmit {
+                focusedField = .email
+            }
         
         LabeledTextField(label: "Email", text: $email, placeholder: "JohnDoe@test.com", inputType: .emailAddress)
             .padding()
+            .onSubmit {
+                focusedField = .password
+            }
         
         LabeledTextField(label: "Password", text: $password, placeholder: "******", isSecure: true)
             .padding()
+            .onSubmit {
+                focusedField = .confirmPassword
+            }
         
         LabeledTextField(label: "Confirm Password", text: $confirmPassword, placeholder: "******", isSecure: true)
             .padding()
+            .onSubmit {
+                focusedField = .none
+            }
     }
     
     private var createAccountButton: some View {

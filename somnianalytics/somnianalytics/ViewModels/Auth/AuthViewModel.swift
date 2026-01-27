@@ -25,6 +25,7 @@ class AuthViewModel {
             try await authService.signUpUser(for: signUpRequest)
             authState = .authenticated
         } catch {
+            authState = .unauthenticated
             throw error
         }
     }
@@ -35,7 +36,8 @@ class AuthViewModel {
             try await authService.loginUser(for: loginRequest)
             authState = .authenticated
         } catch {
-            throw error 
+            authState = .unauthenticated
+            throw error
         }
     }
 }
