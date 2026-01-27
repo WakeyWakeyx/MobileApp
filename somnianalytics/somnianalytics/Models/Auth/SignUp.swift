@@ -12,11 +12,10 @@ struct SignUpRequest: Codable {
     let name: String
     let email: String
     let password: String
-    let confirmPassword: String
 }
 
 struct SignUpResponse: Codable {
-    let jwtToken: String
     let name: String
     let email: String
+    let jwtToken: String
 }

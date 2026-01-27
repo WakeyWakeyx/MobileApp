@@ -75,7 +75,12 @@ struct SignUpView: View {
     
     private var createAccountButton: some View {
         Button(action: {
-            // TODO: Can throw an alert here if the password and confirm password don't match
+            guard password == confirmPassword else {
+                alertTitle = "Passwords Don't Match"
+                alertMessage = "Please make sure both passwords are the same."
+                showAlert = true
+                return
+            }
             Task {
                 do {
                     try await vm.signUp(

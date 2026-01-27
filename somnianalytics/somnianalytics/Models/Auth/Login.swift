@@ -14,6 +14,5 @@ struct LoginRequest: Codable {
 }
 
 struct LoginResponse: Codable {
-    let accessToken: String // This is the jwt that will be returned to the user
-    let nameOfUser: String
+    let jwtToken: String // This is the jwt that will be returned to the user
 }

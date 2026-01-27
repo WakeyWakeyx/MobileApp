@@ -11,16 +11,23 @@ import Observation
 @Observable
 class AuthViewModel {
     private let authService = AuthService()
-    
-    // Adding these for when we are going to be signing up and after we have sucessfully signed up 
+    var isLoading: Bool = false
+    // Adding these for when we are going to be signing up and after we have sucessfully signed up
     var isSignedUp: Bool = false
-    var isSigningUp: Bool = false
-    // TODO: NEED TO FINISH THIS
+    
     func signUp(for signUpRequest: SignUpRequest) async throws {
         do {
-            try await authService.signUpUser(for: signUpRequest)
+            let response = try await authService.signUpUser(for: signUpRequest)
         } catch {
             throw error
+        }
+    }
+    
+    func login(for loginRequest: LoginRequest) async throws {
+        do {
+            try await authService.loginUser(for: loginRequest)
+        } catch {
+            throw error 
         }
     }
 }
