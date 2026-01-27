@@ -9,12 +9,21 @@ import SwiftUI
 
 @main
 struct somnianalyticsApp: App {
-    @State private var signUpVM = AuthViewModel()
+    @State private var authVM = AuthViewModel()
     
     var body: some Scene {
         WindowGroup {
-            SignUpView()
-            .environment(signUpVM)
+            Group {
+                if authVM.isAuthenticated {
+                    HomeView()
+                }
+                else {
+                    // TODO: WILL CHANGE THIS TO AN AUTH ENTRY VIEW
+                    SignUpView()
+                }
+            }
+            .environment(authVM)
+            
         }
     }
 }

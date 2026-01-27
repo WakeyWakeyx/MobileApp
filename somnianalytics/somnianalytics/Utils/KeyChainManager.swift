@@ -40,7 +40,7 @@ final class KeyChainManager {
         // deleting item first before adding so we don't get a duplicate error, and so we save the most recent data
         let deleteStatus = SecItemDelete(query as CFDictionary)
         
-        guard deleteStatus == errSecSuccess else {
+        guard deleteStatus == errSecSuccess || deleteStatus == errSecItemNotFound else {
             throw KeyChainError.deleteFailed
         }
         

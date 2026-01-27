@@ -19,6 +19,7 @@ struct AuthService {
         self.tokenProvider = tokenProvider
         self.networkHelpers = networkHelpers
     }
+    
     func loginUser(for loginRequest: LoginRequest) async throws {
         let confirmedURL = try networkHelpers.confirmURL(url: "https://wilbur-unentertained-brianna.ngrok-free.dev/api/auth/login")
         let resource = Resource<LoginResponse>(url: confirmedURL, method: .post(loginRequest))
@@ -27,13 +28,15 @@ struct AuthService {
     }
     
      
-    func signUpUser(for signUpRequest: SignUpRequest) async throws -> SignUpResponse{
+    func signUpUser(for signUpRequest: SignUpRequest) async throws {
         // this url will change everytime the ngrok url changes
         let confirmedURL = try networkHelpers.confirmURL(url: "https://wilbur-unentertained-brianna.ngrok-free.dev/api/auth/create")
         let resource = Resource<SignUpResponse>(url: confirmedURL, method: .post(signUpRequest))
         let response: SignUpResponse = try await apiClient.load(resource)
         
         try tokenProvider.setToken(response.jwtToken)
-        return response
+        
+        let token = try tokenProvider.getToken()
+        print("token: \(token ?? "NO TOKEN FOUND")")
     }
 }

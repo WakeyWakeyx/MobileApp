@@ -1,32 +1,32 @@
 //
-//  SignUpView.swift
+//  LoginView.swift
 //  somnianalytics
 //
-//  Created by Hayden Barogh on 1/26/26.
+//  Created by Hayden Barogh on 1/27/26.
 //
 
 import SwiftUI
 
-struct SignUpView: View {
-    @State private var name = ""
+struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
-    @State private var confirmPassword = ""
     @Environment(AuthViewModel.self) private var vm
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var alertTitle = ""
+    
     enum Field {
-        case name, email, password, confirmPassword
+        case email, password
     }
     @FocusState private var focusedField: Field?
     
+    
     var body: some View {
-        VStack {
+        VStack{
             header
-            ScrollView{
+            ScrollView {
                 textFields
-                createAccountButton
+                loginButton
             }
         }
         .toolbar {
@@ -42,7 +42,7 @@ struct SignUpView: View {
             }
         }
         .onAppear {
-            focusedField = .name
+            focusedField = .email
         }
         .alert(alertTitle, isPresented: $showAlert) {
             Button("Ok", role: .cancel) {}
@@ -50,6 +50,7 @@ struct SignUpView: View {
             Text(alertMessage)
         }
     }
+    
     
     private var header: some View {
         Text("Create Account")
@@ -60,40 +61,28 @@ struct SignUpView: View {
     
     @ViewBuilder
     private var textFields: some View {
-        LabeledTextField(label: "Name", text: $name, placeholder: "")
+        LabeledTextField(label: "Email", text: $email)
             .padding()
         
-        LabeledTextField(label: "Email", text: $email, placeholder: "JohnDoe@test.com", inputType: .emailAddress)
-            .padding()
-        
-        LabeledTextField(label: "Password", text: $password, placeholder: "******", isSecure: true)
-            .padding()
-        
-        LabeledTextField(label: "Confirm Password", text: $confirmPassword, placeholder: "******", isSecure: true)
+        LabeledTextField(label: "Password", text: $password, isSecure: true)
             .padding()
     }
     
-    private var createAccountButton: some View {
+    private var loginButton: some View {
         Button(action: {
-            guard password == confirmPassword else {
-                alertTitle = "Passwords Don't Match"
-                alertMessage = "Please make sure both passwords are the same."
-                showAlert = true
-                return
-            }
+            // TODO: NEED TO ADD INPUT VALIDATION HERE
             Task {
                 do {
-                    try await vm.signUp(
+                    try await vm.login(
                         for: .init(
-                            name: name,
                             email: email,
-                            password: password,
+                            password: password
                         )
                     )
                 } catch {
                     // can throw an error here with alerts
                     await MainActor.run {
-                        alertTitle = "Sign up failed"
+                        alertTitle = "Login failed"
                         alertMessage = error.localizedDescription
                         showAlert = true
                     }
@@ -113,7 +102,6 @@ struct SignUpView: View {
 }
 
 #Preview {
-    SignUpView()
+    LoginView()
         .environment(AuthViewModel())
-
 }
