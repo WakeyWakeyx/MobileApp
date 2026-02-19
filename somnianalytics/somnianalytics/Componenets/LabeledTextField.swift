@@ -13,28 +13,40 @@ struct LabeledTextField: View {
     var placeholder: String = ""
     var inputType: UIKeyboardType = .default
     var isSecure: Bool = false
+    // Icon for each text field
+    var icon: String? = nil
+
+    
     var body: some View {
-        VStack(alignment: .leading){
+        VStack(alignment: .leading, spacing: 8){
             Text(label)
-                .font(.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(.primary)
-                .padding(.horizontal)
-            if isSecure {
-                SecureField(placeholder, text: $text)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.horizontal)
-                    .shadow(color: Color.black.opacity(0.1),radius: 2)
-                    .keyboardType(inputType)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(Color.white.opacity(0.7))
+            
+            // Input box
+            HStack {
+                if let icon = icon {
+                    Image(systemName: icon)
+                        .foregroundColor(Color.white.opacity(0.4))
+                }
+                if isSecure {
+                    SecureField(placeholder, text: $text, prompt:
+                                    Text(placeholder).foregroundColor(Color.white.opacity(0.5))
+                                )
+                        .foregroundColor(.white)
+                        .keyboardType(inputType)
+                }
+                else {
+                    TextField(placeholder, text: $text, prompt:
+                                Text(placeholder).foregroundColor(Color.white.opacity(0.5))
+                            )
+                        .foregroundColor(.white)
+                        .keyboardType(inputType)
+                }
             }
-            else {
-                TextField(placeholder, text: $text)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.horizontal)
-                    .shadow(color: Color.black.opacity(0.1), radius: 2)
-                    .keyboardType(inputType)
-            }
-                            
+            .padding(16)
+            .background(Color.white.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
     }
 }
