@@ -28,6 +28,7 @@ final class Router {
     // The router level increases for the children
     weak var parent: Router?
     
+    private(set) var isActive: Bool = false
     
     init(level: Int, identifierTab: TabDestination?) {
         self.level = level
@@ -38,6 +39,25 @@ final class Router {
     private func resetContent() {
         navigationStackPath = []
         presentingSheet = nil
+    }
+}
+
+// MARK: Router Management
+
+extension Router {
+    func childRouter(for tab: TabDestination? = nil) -> Router {
+        let router = Router(level: level + 1, identifierTab: tab ?? identifierTab)
+        router.parent = self
+        return router
+    }
+    
+    func setActive() {
+        parent?.resignActive()
+        isActive = true
+    }
+    
+    func resignActive() {
+        isActive = false
     }
 }
 

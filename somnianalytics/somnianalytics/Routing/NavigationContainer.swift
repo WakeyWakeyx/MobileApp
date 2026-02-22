@@ -13,11 +13,11 @@ struct NavigationContainer<Content: View>: View {
     @ViewBuilder var content: () -> Content
     
     init(
-        router: Router,
+        parentRouter: Router,
         tab: TabDestination? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
-        self.router = router
+        self._router = .init(initialValue: parentRouter.childRouter(for: tab))
         self.content = content
     }
     
@@ -26,12 +26,8 @@ struct NavigationContainer<Content: View>: View {
             content()
         }
         .environment(router)
-        .onOpenURL(perform: openDeepLinkIfFound(for:))
-    }
-    
-    // TODO: Need to finish this
-    func openDeepLinkIfFound(for url: URL) {
-        
+        .onAppear(perform: router.setActive)
+        .onDisappear(perform: router.resignActive)
     }
 }
 
@@ -46,16 +42,14 @@ private struct InnerContainer<Content: View>: View {
                     view(for: destination)
                 }
         }
-//        .sheet(item: $router.presentingSheet) { sheet in
-//            navigationView(for: sheet, from: router)
-//        } CAN ADD THIS IN LATER IF WE NEED IT
+        .sheet(item: $router.presentingSheet) { sheet in
+            navigationView(for: sheet, from: router)
+        }
     }
     
-    
-    // CAN ADD THIS LATER AS WELL IF WE NEED IT 
-//    @ViewBuilder func navigationView(for destination: SheetDestination, from router: Router) -> some View {
-//        NavigationContainer(parentRouter: router) {
-//            view(for: destination)
-//        }
-//    }
+    @ViewBuilder func navigationView(for destination: SheetDestination, from router: Router) -> some View {
+        NavigationContainer(parentRouter: router) {
+            view(for: destination)
+        }
+    }
 }

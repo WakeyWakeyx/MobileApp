@@ -18,13 +18,13 @@ import SwiftUI
 }
 
 // Can add this functionality when we need sheets, currently we don't 
-//@ViewBuilder func view(for destination: SheetDestination) -> some View {
-//    Group {
-//        switch destination {
-//        case .sleepDetails(id):
-//            
-//        }
-//    }
-//    .navigationBarTitleDisplayMode(.inline)
-//    .presentationBackground(.regularMaterial)
-//}
+@ViewBuilder func view(for destination: SheetDestination) -> some View {
+    Group {
+        switch destination {
+        case .sleepDetails(_):
+            LoginView() // TODO: WHENEVER WE GET A SHEET THAT WE ACUTALLY NEED TO USE WE WILL REPLACE THIS
+        }
+    }
+    .navigationBarTitleDisplayMode(.inline)
+    .presentationBackground(.regularMaterial)
+}
