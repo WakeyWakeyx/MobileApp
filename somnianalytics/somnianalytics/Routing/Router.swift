@@ -91,6 +91,11 @@ extension Router {
     func present(sheet destination: SheetDestination) {
         presentingSheet = destination
     }
+    
+    @MainActor
+    func reset() {
+        resetContent()
+    }
 }
 
 
