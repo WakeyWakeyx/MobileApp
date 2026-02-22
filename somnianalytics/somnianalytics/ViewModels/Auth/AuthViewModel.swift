@@ -11,7 +11,6 @@ import Observation
 @Observable
 class AuthViewModel {
     private let authService = AuthService()
-    // TODO: Need to add the way to show loading state in the project when an api call is being made
     var isLoading: Bool = false
     // Adding these for when we are going to be signing up and after we have sucessfully signed up
     var authState: AuthState = .unauthenticated
@@ -22,10 +21,13 @@ class AuthViewModel {
     func signUp(for signUpRequest: SignUpRequest) async throws {
         do {
             authState = .authenticating
+            isLoading = true
             try await authService.signUpUser(for: signUpRequest)
             authState = .authenticated
+            isLoading = true
         } catch {
             authState = .unauthenticated
+            isLoading = false
             throw error
         }
     }
@@ -33,10 +35,13 @@ class AuthViewModel {
     func login(for loginRequest: LoginRequest) async throws {
         do {
             authState = .authenticating
+            isLoading = true
             try await authService.loginUser(for: loginRequest)
             authState = .authenticated
+            isLoading = false
         } catch {
             authState = .unauthenticated
+            isLoading = false
             throw error
         }
     }

@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct LoginView: View {
+    @Environment(AuthViewModel.self) private var vm
+    @Environment(Router.self) private var router
+    
     @State private var email = ""
     @State private var password = ""
-    @Environment(AuthViewModel.self) private var vm
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var alertTitle = ""
@@ -41,6 +43,11 @@ struct LoginView: View {
                 }
             }
         }
+        .overlay {
+            if vm.isLoading {
+                LoadingView()
+            }
+        }
         .onAppear {
             focusedField = .email
         }
@@ -49,6 +56,7 @@ struct LoginView: View {
         } message: {
             Text(alertMessage)
         }
+        
     }
     
     
@@ -92,6 +100,7 @@ struct LoginView: View {
                             password: password
                         )
                     )
+                    router.reset()
                 } catch {
                     // can throw an error here with alerts
                     await MainActor.run {

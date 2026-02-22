@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-
-// TODO: THIS PAGE WILL NEED ROUTING SET UP AND THEN WE WILL PROGRAMMATICALLY SEND THE USER TO EACH PAGE BASED ON THE BUTTON THEY CLICK ON 
+ 
 struct AuthEntryView: View {
+    @Environment(Router.self) private var router: Router
     var body: some View {
         VStack {
             Spacer()
@@ -38,7 +38,7 @@ struct AuthEntryView: View {
     private var authFlowButtons: some View {
         VStack {
             Button(action: {
-                // TODO: MAKE THIS GO TO THE SIGN IN PAGE
+                router.navigate(to: .push(.login))
             }) {
                 Spacer()
                 Text("Sign In")
@@ -53,7 +53,7 @@ struct AuthEntryView: View {
             .padding()
             
             Button(action: {
-                // TODO: MAKE THIS GO TO THE SIGN UP PAGE
+                router.navigate(to: .push(.signUp))
             }) {
                 Spacer()
                 Text("Sign Up")
@@ -73,4 +73,5 @@ struct AuthEntryView: View {
 
 #Preview {
     AuthEntryView()
+        .environment(Router(level: 0, identifierTab: nil))
 }
