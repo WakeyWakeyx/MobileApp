@@ -16,7 +16,7 @@ struct somnianalyticsApp: App {
         WindowGroup {
             NavigationContainer(parentRouter: router) {
                 if authVM.isAuthenticated {
-                    HomeView()
+                    RootTabView()
                 }
                 else {
                     AuthEntryView()
