@@ -64,3 +64,5 @@ fastlane/test_output
 xcuserdata/
 *.xcuserstate
 *.xcscheme
+*.xcshareddata
+*.xcworkspace
