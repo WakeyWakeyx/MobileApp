@@ -9,8 +9,12 @@ import SwiftUI
 
 struct AlarmView: View {
     var body: some View {
-        Text("Alarm View")
-            .font(.largeTitle)
+        VStack {
+            Text("Alarm View")
+                .font(.largeTitle)
+        }
+        .navigationTitle("Alarm")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

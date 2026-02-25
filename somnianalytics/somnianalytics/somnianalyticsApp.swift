@@ -10,20 +10,20 @@ import SwiftUI
 @main
 struct somnianalyticsApp: App {
     @State private var authVM = AuthViewModel()
-    @State private var router = Router(level: 0, identifierTab: .home)
+    @State private var router = Router(level: 0, identifierTab: nil)
     
     var body: some Scene {
         WindowGroup {
-            NavigationContainer(parentRouter: router) {
-                if authVM.isAuthenticated {
-                    RootTabView()
-                }
-                else {
+            if authVM.isAuthenticated {
+                RootTabView()
+            }
+            else {
+                NavigationContainer(parentRouter: router) {
                     AuthEntryView()
                 }
             }
-            .environment(authVM)
-            .environment(router)
         }
+        .environment(authVM)
+        .environment(router)
     }
 }

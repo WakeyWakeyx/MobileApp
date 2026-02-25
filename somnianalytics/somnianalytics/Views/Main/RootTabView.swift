@@ -8,13 +8,10 @@
 import SwiftUI
 
 struct RootTabView: View {
-    @Environment(Router.self) private var router: Router
-//    @State var router: Router = .init(level: 0, identifierTab: nil)
+//    @Environment(Router.self) private var router: Router
+    @State var router: Router = .init(level: 0, identifierTab: nil)
     var body: some View {
-        TabView(selection: Binding(
-                    get: { router.selectedTab ?? .home },
-                    set: { router.select(tab: $0) }
-                )) {
+        TabView(selection: $router.selectedTab) {
             Tab("Home", systemImage: "house", value: TabDestination.home) {
                 NavigationContainer(parentRouter: router, tab: .home) {
                     HomeView()

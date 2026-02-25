@@ -43,4 +43,7 @@ func checkAuthorization() async -> AlarmStates {
     @unknown default:
         return AlarmStates.unknown
     }
+    
+    // default return
+    return AlarmStates.unknown
 }
