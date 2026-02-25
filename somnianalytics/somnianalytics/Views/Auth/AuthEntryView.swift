@@ -56,7 +56,7 @@ struct AuthEntryView: View {
             }
             .padding(.bottom, 15)
             
-            Text("SleepSmart")
+            Text("Somni Analytics")
                 .font(.system(size: 45, weight: .bold))
                 .foregroundColor(.white)
             
