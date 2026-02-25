@@ -99,15 +99,8 @@ struct LoginView: View {
             
             // Title
             Text("Welcome Back!")
-                .font(.system(size: 34, weight: .bold))
+                .font(.system(size: 28, weight: .bold))
                 .foregroundColor(.white)
-            
-            // Subtitle
-            Text("will add something")
-                .font(.system(size: 15))
-                .foregroundColor(Color.white.opacity(0.55))
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
         }
         .padding(.bottom, 32)
     }
@@ -115,7 +108,7 @@ struct LoginView: View {
     @ViewBuilder
     private var textFields: some View {
         // Email
-        LabeledTextField(label: "Email", text: $email, placeholder: "john@example.com", inputType: .emailAddress, icon: "envelope")
+        LabeledTextField(label: "Email", text: $email, placeholder: "Enter email", inputType: .emailAddress, icon: "envelope")
             .padding(.horizontal, 24)
             .onSubmit {
                 focusedField = .password
@@ -125,7 +118,7 @@ struct LoginView: View {
         VStack(alignment: .leading, spacing: 8) {
             // Label row with Forgot? link on the right
             HStack {
-                Text("Password")
+                Text("Enter password")
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(Color.white.opacity(0.7))
                 Spacer()
@@ -146,7 +139,7 @@ struct LoginView: View {
                 // Switch between visible and hidden password
                 if showPassword {
                     TextField("", text: $password, prompt:
-                        Text("******").foregroundColor(Color.white.opacity(0.5))
+                        Text("Enter passowrd").foregroundColor(Color.white.opacity(0.5))
                     )
                     .foregroundColor(.white)
                     .focused($focusedField, equals: .password)
@@ -155,7 +148,7 @@ struct LoginView: View {
                     }
                 } else {
                     SecureField("", text: $password, prompt:
-                        Text("******").foregroundColor(Color.white.opacity(0.5))
+                        Text("Enter passowrd").foregroundColor(Color.white.opacity(0.5))
                     )
                     .foregroundColor(.white)
                     .focused($focusedField, equals: .password)

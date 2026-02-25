@@ -95,29 +95,22 @@ struct SignUpView: View {
             .padding(.top, 20)
             
             // Title
-            Text("SleepSmart")
-                .font(.system(size: 34, weight: .bold))
+            Text("Create your account!")
+                .font(.system(size: 28, weight: .bold))
                 .foregroundColor(.white)
-
-            // Subtitle
-            Text("will add something later")
-                .font(.system(size: 15))
-                .foregroundColor(Color.white.opacity(0.55))
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
         }
         .padding(.bottom, 24)
     }
     
     @ViewBuilder
     private var textFields: some View {
-        LabeledTextField(label: "Full Name", text: $name, placeholder: "John Doe", icon: "person")
+        LabeledTextField(label: "Full Name", text: $name, placeholder: "Enter name", icon: "person")
             .padding(.horizontal, 24)
             .onSubmit {
                 focusedField = .email
             }
         
-        LabeledTextField(label: "Email", text: $email, placeholder: "JohnDoe@test.com", inputType: .emailAddress, icon: "envelope")
+        LabeledTextField(label: "Email", text: $email, placeholder: "Enter email", inputType: .emailAddress, icon: "envelope")
             .padding(.horizontal, 24)
             .onSubmit {
                 focusedField = .password
@@ -125,7 +118,7 @@ struct SignUpView: View {
         
         // Password
         VStack(alignment: .leading, spacing: 8) {
-            Text("Password")
+            Text("Create Password")
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(Color.white.opacity(0.7))
 
@@ -136,14 +129,14 @@ struct SignUpView: View {
                 // Switch between visible and hidden password
                 if showPassword {
                     TextField("", text: $password, prompt:
-                        Text("******").foregroundColor(Color.white.opacity(0.5))
+                        Text("Enter Password").foregroundColor(Color.white.opacity(0.5))
                     )
                     .foregroundColor(.white)
                     .focused($focusedField, equals: .password)
                     .onSubmit { focusedField = .confirmPassword }
                 } else {
                     SecureField("", text: $password, prompt:
-                        Text("******").foregroundColor(Color.white.opacity(0.5))
+                        Text("Enter Password").foregroundColor(Color.white.opacity(0.5))
                     )
                     .foregroundColor(.white)
                     .focused($focusedField, equals: .password)
@@ -179,14 +172,14 @@ struct SignUpView: View {
                 // Switch between visible and hidden confirm password
                 if showConfirmPassword {
                     TextField("", text: $confirmPassword, prompt:
-                        Text("••••••••").foregroundColor(Color.white.opacity(0.5))
+                        Text("Confirm Password").foregroundColor(Color.white.opacity(0.5))
                     )
                     .foregroundColor(.white)
                     .focused($focusedField, equals: .confirmPassword)
                     .onSubmit { focusedField = .none }
                 } else {
                     SecureField("", text: $confirmPassword, prompt:
-                        Text("••••••••").foregroundColor(Color.white.opacity(0.5))
+                        Text("Confirm Password").foregroundColor(Color.white.opacity(0.5))
                     )
                     .foregroundColor(.white)
                     .focused($focusedField, equals: .confirmPassword)
