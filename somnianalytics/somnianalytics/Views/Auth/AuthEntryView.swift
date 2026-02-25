@@ -76,7 +76,7 @@ struct AuthEntryView: View {
         VStack(spacing: 12) {
             // Sign up button
             Button(action: {
-                router.navigate(to: .push(.login))
+                router.navigate(to: .push(.signUp))
             }) {
                 HStack {
                     Text("Get Started")
@@ -93,7 +93,7 @@ struct AuthEntryView: View {
             
             // Sign in button
             Button(action: {
-                router.navigate(to: .push(.signUp))
+                router.navigate(to: .push(.login))
             }) {
                 Text("Sign In")
                 .font(.system(size: 17, weight: .semibold))
