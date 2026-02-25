@@ -219,7 +219,7 @@ struct LoginView: View {
                 Text("Don't have an account?")
                     .foregroundColor(Color.white.opacity(0.5))
                 Button(action: {
-                    // TODO: MAKE THIS GO TO SIGN UP PAGE
+                    router.navigate(to: .push(.signUp))
                 }) {
                     Text("Sign up")
                         .foregroundColor(Color(red: 0.55, green: 0.35, blue: 0.95))

@@ -251,7 +251,7 @@ struct SignUpView: View {
             HStack(spacing: 4) {
                 Text("Already have an account?").foregroundColor(Color.white.opacity(0.5))
                 Button(action: {
-                    // TODO: MAKE THIS GO TO THE SIGN IN PAGE
+                    router.navigate(to: .push(.login))
                 }) {
                     Text("Log in").foregroundColor(Color(red: 0.55, green: 0.35, blue: 0.95))
                 }
