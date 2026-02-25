@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @Environment(AuthViewModel.self) private var vm
+    @Environment(Router.self) private var router
     @State private var name = ""
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
-    @Environment(AuthViewModel.self) private var vm
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var alertTitle = ""
@@ -57,14 +58,21 @@ struct SignUpView: View {
                     }
                 }
             }
-            .onAppear {
-                focusedField = .name
+        }
+        // Auto focus name field when screen loads
+        .onAppear {
+            focusedField = .name
+        }
+        // Show loading spinner while request is in flight
+        .overlay {
+            if vm.isLoading {
+                LoadingView()
             }
-            .alert(alertTitle, isPresented: $showAlert) {
-                Button("Ok", role: .cancel) {}
-            } message: {
-                Text(alertMessage)
-            }
+        }
+        .alert(alertTitle, isPresented: $showAlert) {
+            Button("Ok", role: .cancel) {}
+        } message: {
+            Text(alertMessage)
         }
     }
     
@@ -144,8 +152,9 @@ struct SignUpView: View {
                                 password: password,
                             )
                         )
+                        // Reset router after successful sign up
+                        await router.reset()
                     } catch {
-                        // can throw an error here with alerts
                         await MainActor.run {
                             alertTitle = "Sign up failed"
                             alertMessage = error.localizedDescription

@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct LoginView: View {
+    @Environment(AuthViewModel.self) private var vm
+    @Environment(Router.self) private var router
+    
     @State private var email = ""
     @State private var password = ""
-    @Environment(AuthViewModel.self) private var vm
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var alertTitle = ""
@@ -59,14 +61,21 @@ struct LoginView: View {
                     }
                 }
             }
-            .onAppear {
-                focusedField = .email
+        }
+        // Show loading spinner while request is in flight
+        .overlay {
+            if vm.isLoading {
+                LoadingView()
             }
-            .alert(alertTitle, isPresented: $showAlert) {
-                Button("Ok", role: .cancel) {}
-            } message: {
-                Text(alertMessage)
-            }
+        }
+        // Auto focus email field when screen loads
+        .onAppear {
+            focusedField = .email
+        }
+        .alert(alertTitle, isPresented: $showAlert) {
+            Button("Ok", role: .cancel) {}
+        } message: {
+            Text(alertMessage)
         }
     }
     
@@ -185,8 +194,9 @@ struct LoginView: View {
                                 password: password
                             )
                         )
+                        // Reset router after successful login
+                        router.reset()
                     } catch {
-                        // can throw an error here with alerts
                         await MainActor.run {
                             alertTitle = "Login failed"
                             alertMessage = error.localizedDescription

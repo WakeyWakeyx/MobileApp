@@ -9,10 +9,18 @@ import SwiftUI
 
 // Will refine this later but just need a placeholder for now
 struct LoadingView: View {
+//    var body: some View {
+//        VStack {
+//            ProgressView()
+//            Text("Loading...")
+//        }
+//    }
     var body: some View {
-        VStack {
+        ZStack {
+            Color.black.opacity(0.3)
+                .ignoresSafeArea()
             ProgressView()
-            Text("Loading...")
+                .scaleEffect(1.4)
         }
     }
 }
