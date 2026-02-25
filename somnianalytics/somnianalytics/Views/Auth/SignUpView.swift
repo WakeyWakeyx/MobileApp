@@ -21,6 +21,8 @@ struct SignUpView: View {
         case name, email, password, confirmPassword
     }
     @FocusState private var focusedField: Field?
+    @State private var showPassword = false
+    @State private var showConfirmPassword = false
     
     var body: some View {
         ZStack {
@@ -121,18 +123,91 @@ struct SignUpView: View {
                 focusedField = .password
             }
         
-        LabeledTextField(label: "Password", text: $password, placeholder: "******", isSecure: true)
-            .padding(.horizontal, 24)
-            .onSubmit {
-                focusedField = .confirmPassword
+        // Password
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Password")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(Color.white.opacity(0.7))
+
+            HStack {
+                Image(systemName: "lock")
+                    .foregroundColor(Color.white.opacity(0.4))
+
+                // Switch between visible and hidden password
+                if showPassword {
+                    TextField("", text: $password, prompt:
+                        Text("******").foregroundColor(Color.white.opacity(0.5))
+                    )
+                    .foregroundColor(.white)
+                    .focused($focusedField, equals: .password)
+                    .onSubmit { focusedField = .confirmPassword }
+                } else {
+                    SecureField("", text: $password, prompt:
+                        Text("******").foregroundColor(Color.white.opacity(0.5))
+                    )
+                    .foregroundColor(.white)
+                    .focused($focusedField, equals: .password)
+                    .onSubmit { focusedField = .confirmPassword }
+                }
+
+                Spacer()
+
+                // Eye icon toggles password visibility
+                Button(action: {
+                    showPassword.toggle()
+                }) {
+                    Image(systemName: showPassword ? "eye.slash" : "eye")
+                        .foregroundColor(Color.white.opacity(0.4))
+                }
             }
-        
-        LabeledTextField(label: "Confirm Password", text: $confirmPassword, placeholder: "******", isSecure: true)
-            .padding(.horizontal, 24)
-            .onSubmit {
-                focusedField = .none
+            .padding(16)
+            .background(Color.white.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        }
+        .padding(.horizontal, 24)
+
+        // Confirm Password
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Confirm Password")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(Color.white.opacity(0.7))
+
+            HStack {
+                Image(systemName: "lock")
+                    .foregroundColor(Color.white.opacity(0.4))
+
+                // Switch between visible and hidden confirm password
+                if showConfirmPassword {
+                    TextField("", text: $confirmPassword, prompt:
+                        Text("••••••••").foregroundColor(Color.white.opacity(0.5))
+                    )
+                    .foregroundColor(.white)
+                    .focused($focusedField, equals: .confirmPassword)
+                    .onSubmit { focusedField = .none }
+                } else {
+                    SecureField("", text: $confirmPassword, prompt:
+                        Text("••••••••").foregroundColor(Color.white.opacity(0.5))
+                    )
+                    .foregroundColor(.white)
+                    .focused($focusedField, equals: .confirmPassword)
+                    .onSubmit { focusedField = .none }
+                }
+
+                Spacer()
+
+                // Eye icon toggles confirm password visibility
+                Button(action: {
+                    showConfirmPassword.toggle()
+                }) {
+                    Image(systemName: showConfirmPassword ? "eye" : "eye.slash")
+                        .foregroundColor(Color.white.opacity(0.4))
+                }
             }
-    }
+            .padding(16)
+            .background(Color.white.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        }
+        .padding(.horizontal, 24)    }
     
     private var createAccountButton: some View {
         VStack(spacing: 15) {
