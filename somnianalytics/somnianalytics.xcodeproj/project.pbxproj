@@ -11,7 +11,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		B7104AF22F4D63BA0080C884 /* Exceptions for "somnianalytics" folder in "somnianalytics" target */ = {
+		B7C58E552F4F996100A11DAD /* Exceptions for "somnianalytics" folder in "somnianalytics" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -24,7 +24,7 @@
 		B7F946582F0C9F080022A39B /* somnianalytics */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				B7104AF22F4D63BA0080C884 /* Exceptions for "somnianalytics" folder in "somnianalytics" target */,
+				B7C58E552F4F996100A11DAD /* Exceptions for "somnianalytics" folder in "somnianalytics" target */,
 			);
 			path = somnianalytics;
 			sourceTree = "<group>";
@@ -269,7 +269,7 @@
 				DEVELOPMENT_TEAM = B78BPGB657;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = somnianalytics/Info.plist;
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -302,7 +302,7 @@
 				DEVELOPMENT_TEAM = B78BPGB657;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = somnianalytics/Info.plist;
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>NSAlarmKitUsageDescription</key>
-	<string>We will schedule alarms for you to wake you up at the optimal time.</string>
+	<string>Using the alarms to wake you up. </string>
 </dict>
 </plist>
