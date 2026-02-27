@@ -39,18 +39,11 @@ func scheduleAlarm(userId: Int) async throws {
         systemImageName: "stop.circle"
     )
     
-    let repeatButton = AlarmButton(
-        text: "Repeat",
-        textColor: .white,
-       systemImageName: "repeat.circle"
-    )
-    
     // alert presentation for when it pops up in the top of the screen
     let alertPresentation = AlarmPresentation.Alert(
         title: "Wake Up!",
         secondaryButton: stopButton
     )
-    
     
     let attributes = AlarmAttributes<AlarmData>(
         presentation: AlarmPresentation(alert: alertPresentation),
