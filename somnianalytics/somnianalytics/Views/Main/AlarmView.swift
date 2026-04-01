@@ -28,6 +28,8 @@ struct AlarmView: View {
             
             alarmStatus
             
+            scheduleAlarmButton
+            
             Spacer()
             
         }
@@ -38,6 +40,11 @@ struct AlarmView: View {
                 await alarmService.requestAuthorization()
             }
         })
+        .overlay {
+            if alarmService.isLoading {
+                LoadingView()
+            }
+        }
     }
     
     
@@ -131,6 +138,14 @@ struct AlarmView: View {
                     .stroke(Color.white.opacity(0.05), lineWidth: 1) // subtle border
             )
             .padding(.horizontal)
+    }
+    
+    private var scheduleAlarmButton: some View {
+        Button("Set Alarm") {
+            Task {
+                await alarmService.createAlarm()
+            }
+        }
     }
     
     

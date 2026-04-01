@@ -49,9 +49,10 @@ public func scheduleAlarm(userId: Int) async throws {
         presentation: AlarmPresentation(alert: alertPresentation),
         tintColor: .purple
     )
+    let duration = Alarm.CountdownDuration(preAlert: (10 * 60), postAlert: (5 * 60))
     
     // setting the countdown as .none so that it will immediatlely fire the alarm off because we are wanting this to happen in real time
-    let alarmConfiguration = AlarmConfiguration(countdownDuration: .none, attributes: attributes)
+    let alarmConfiguration = AlarmConfiguration(countdownDuration: duration, attributes: attributes)
     do {
         try await AlarmManager.shared.schedule(id: id, configuration: alarmConfiguration)
     } catch {

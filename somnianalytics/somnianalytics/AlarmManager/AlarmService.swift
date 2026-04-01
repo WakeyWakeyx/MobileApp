@@ -36,8 +36,13 @@ final class AlarmService {
      */
     func createAlarm() async {
         do {
-            try await alarmEngine.requestAuthorization()
+            isLoading = true
+            try await alarmEngine.scheduleSingleAlarm()
+            print("Alarm created")
+            isLoading = false
         } catch {
+            print(error)
+            isLoading = false
             
         }
     }
