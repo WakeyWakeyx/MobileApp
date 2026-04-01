@@ -10,5 +10,36 @@ import AlarmKit
 
 @Observable
 final class AlarmService {
+    var alarmAuthState: AlarmStates = AlarmStates.unknown
+    var alarms: [Alarm] = []
+    var isLoading: Bool = false
+    let alarmEngine = AlarmEngine()
+    
+    func loadAlarms() async throws {
+        do {
+            // in here would call a method to load the alarms from the user's storage
+            
+        } catch {
+            
+        }
+    }
+    
+    /**
+        Method to request the alarm state from the user.
+     */
+    func requestAuthorization() async {
+        alarmAuthState = await alarmEngine.checkAuthorization()
+    }
+    
+    /**
+     Method for creating an alarm
+     */
+    func createAlarm() async {
+        do {
+            try await alarmEngine.requestAuthorization()
+        } catch {
+            
+        }
+    }
     
 }

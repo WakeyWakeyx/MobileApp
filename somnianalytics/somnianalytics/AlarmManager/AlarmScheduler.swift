@@ -19,7 +19,7 @@ struct AlarmData: AlarmMetadata {
     let enabled: Bool // might not keep this
     
     init(id: UUID, userId: Int, alarmName: String, enabled: Bool ) {
-        self.id = UUID()	
+        self.id = id
         self.userId = userId
         self.alarmName = alarmName
         self.enabled = enabled
@@ -27,11 +27,11 @@ struct AlarmData: AlarmMetadata {
 }
 
 
-func scheduleAlarm(userId: Int) async throws {
+public func scheduleAlarm(userId: Int) async throws {
     typealias AlarmConfiguration = AlarmManager.AlarmConfiguration<AlarmData>
     
     let id = UUID() //alarm id
-    
+     
     // this is the button that is shown when the phone is not in the home section
     let stopButton = AlarmButton(
         text: "dismiss",

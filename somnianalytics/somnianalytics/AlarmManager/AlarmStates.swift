@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum AlarmStates {
-    case unAuthorized
-    case authorized
-    case unknown
+enum AlarmStates: String {
+    case unAuthorized = "unauthorized"
+    case authorized = "authorized"
+    case unknown = "unknown"
 }

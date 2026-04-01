@@ -55,6 +55,8 @@ actor AlarmEngine {
         }
     }
     
-    // function that will be called to alarms
-    // TODO: need to make the function 
+    // function that will be called to schedule single alarms, and we might make the payload for this more so that we maybe send an http request to the backend potentially also updating the alarm table?
+    func scheduleSingleAlarm() async throws {
+        try await scheduleAlarm(userId: 10)
+    }
 }
