@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct RootTabView: View {
-    @Environment(Router.self) private var router: Router
-//    @State var router: Router = .init(level: 0, identifierTab: nil)
+//    @Environment(Router.self) private var router: Router
+    @State var router: Router = .init(level: 0, identifierTab: nil)
+    @State private var alarmVM = AlarmViewModel()
+    @State private var sharedAlarmStore = SharedAlarmStore.shared
     var body: some View {
-        TabView(selection: Binding(
-                    get: { router.selectedTab ?? .home },
-                    set: { router.select(tab: $0) }
-                )) {
+        TabView(selection: $router.selectedTab) {
             Tab("Home", systemImage: "house", value: TabDestination.home) {
                 NavigationContainer(parentRouter: router, tab: .home) {
                     HomeView()
@@ -36,6 +35,8 @@ struct RootTabView: View {
             Tab("Alarm", systemImage: "alarm", value: TabDestination.alarm){
                 NavigationContainer(parentRouter: router, tab: .alarm) {
                     AlarmView()
+                        .environment(alarmVM)
+                        .environment(sharedAlarmStore)
                 }
             }
         }

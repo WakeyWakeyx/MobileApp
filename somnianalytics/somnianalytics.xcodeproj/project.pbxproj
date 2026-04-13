@@ -6,19 +6,90 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B7A640692F8D6C99001060B5 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A640682F8D6C99001060B5 /* WidgetKit.framework */; };
+		B7A6406B2F8D6C99001060B5 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A6406A2F8D6C99001060B5 /* SwiftUI.framework */; };
+		B7A640782F8D6C9A001060B5 /* AlarmLiveActivityExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B7A640662F8D6C99001060B5 /* AlarmLiveActivityExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B7A640762F8D6C9A001060B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7F9464E2F0C9F080022A39B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7A640652F8D6C99001060B5;
+			remoteInfo = AlarmLiveActivityExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B7A63FF92F8D43B4001060B5 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B7A640782F8D6C9A001060B5 /* AlarmLiveActivityExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		B7A640662F8D6C99001060B5 /* AlarmLiveActivityExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AlarmLiveActivityExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7A640682F8D6C99001060B5 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		B7A6406A2F8D6C99001060B5 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		B7A6407D2F8D6CB9001060B5 /* AlarmLiveActivityExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlarmLiveActivityExtension.entitlements; sourceTree = "<group>"; };
 		B7F946562F0C9F080022A39B /* somnianalytics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = somnianalytics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B7A6407C2F8D6C9A001060B5 /* Exceptions for "AlarmLiveActivity" folder in "AlarmLiveActivityExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B7A640652F8D6C99001060B5 /* AlarmLiveActivityExtension */;
+		};
+		B7C58E552F4F996100A11DAD /* Exceptions for "somnianalytics" folder in "somnianalytics" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B7F946552F0C9F080022A39B /* somnianalytics */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		B7A6406C2F8D6C99001060B5 /* AlarmLiveActivity */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B7A6407C2F8D6C9A001060B5 /* Exceptions for "AlarmLiveActivity" folder in "AlarmLiveActivityExtension" target */,
+			);
+			path = AlarmLiveActivity;
+			sourceTree = "<group>";
+		};
 		B7F946582F0C9F080022A39B /* somnianalytics */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B7C58E552F4F996100A11DAD /* Exceptions for "somnianalytics" folder in "somnianalytics" target */,
+			);
 			path = somnianalytics;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B7A640632F8D6C99001060B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7A6406B2F8D6C99001060B5 /* SwiftUI.framework in Frameworks */,
+				B7A640692F8D6C99001060B5 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B7F946532F0C9F080022A39B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -29,10 +100,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B7A640672F8D6C99001060B5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B7A640682F8D6C99001060B5 /* WidgetKit.framework */,
+				B7A6406A2F8D6C99001060B5 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B7F9464D2F0C9F080022A39B = {
 			isa = PBXGroup;
 			children = (
+				B7A6407D2F8D6CB9001060B5 /* AlarmLiveActivityExtension.entitlements */,
 				B7F946582F0C9F080022A39B /* somnianalytics */,
+				B7A6406C2F8D6C99001060B5 /* AlarmLiveActivity */,
+				B7A640672F8D6C99001060B5 /* Frameworks */,
 				B7F946572F0C9F080022A39B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				B7F946562F0C9F080022A39B /* somnianalytics.app */,
+				B7A640662F8D6C99001060B5 /* AlarmLiveActivityExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +132,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B7A640652F8D6C99001060B5 /* AlarmLiveActivityExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7A640792F8D6C9A001060B5 /* Build configuration list for PBXNativeTarget "AlarmLiveActivityExtension" */;
+			buildPhases = (
+				B7A640622F8D6C99001060B5 /* Sources */,
+				B7A640632F8D6C99001060B5 /* Frameworks */,
+				B7A640642F8D6C99001060B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B7A6406C2F8D6C99001060B5 /* AlarmLiveActivity */,
+			);
+			name = AlarmLiveActivityExtension;
+			packageProductDependencies = (
+			);
+			productName = AlarmLiveActivityExtension;
+			productReference = B7A640662F8D6C99001060B5 /* AlarmLiveActivityExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		B7F946552F0C9F080022A39B /* somnianalytics */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B7F946612F0C9F090022A39B /* Build configuration list for PBXNativeTarget "somnianalytics" */;
@@ -55,10 +161,12 @@
 				B7F946522F0C9F080022A39B /* Sources */,
 				B7F946532F0C9F080022A39B /* Frameworks */,
 				B7F946542F0C9F080022A39B /* Resources */,
+				B7A63FF92F8D43B4001060B5 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B7A640772F8D6C9A001060B5 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				B7F946582F0C9F080022A39B /* somnianalytics */,
@@ -80,6 +188,9 @@
 				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
+					B7A640652F8D6C99001060B5 = {
+						CreatedOnToolsVersion = 26.2;
+					};
 					B7F946552F0C9F080022A39B = {
 						CreatedOnToolsVersion = 26.2;
 					};
@@ -100,11 +211,19 @@
 			projectRoot = "";
 			targets = (
 				B7F946552F0C9F080022A39B /* somnianalytics */,
+				B7A640652F8D6C99001060B5 /* AlarmLiveActivityExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B7A640642F8D6C99001060B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B7F946542F0C9F080022A39B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +234,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B7A640622F8D6C99001060B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B7F946522F0C9F080022A39B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +250,77 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B7A640772F8D6C9A001060B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B7A640652F8D6C99001060B5 /* AlarmLiveActivityExtension */;
+			targetProxy = B7A640762F8D6C9A001060B5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		B7A6407A2F8D6C9A001060B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = AlarmLiveActivityExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B78BPGB657;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AlarmLiveActivity/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AlarmLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.somni.somnianalytics.AlarmLiveActivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B7A6407B2F8D6C9A001060B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = AlarmLiveActivityExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B78BPGB657;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AlarmLiveActivity/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AlarmLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.somni.somnianalytics.AlarmLiveActivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		B7F9465F2F0C9F090022A39B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -251,12 +447,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = somnianalytics/somnianalytics.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B78BPGB657;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = somnianalytics/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,12 +481,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = somnianalytics/somnianalytics.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B78BPGB657;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = somnianalytics/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -315,6 +513,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B7A640792F8D6C9A001060B5 /* Build configuration list for PBXNativeTarget "AlarmLiveActivityExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7A6407A2F8D6C9A001060B5 /* Debug */,
+				B7A6407B2F8D6C9A001060B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B7F946512F0C9F080022A39B /* Build configuration list for PBXProject "somnianalytics" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
