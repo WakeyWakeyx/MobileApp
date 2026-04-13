@@ -11,17 +11,12 @@ import AlarmKit
 @Observable
 final class AlarmViewModel {
     var alarmAuthState: AlarmStates = AlarmStates.unknown
-    var alarms: [Alarm] = []
     var isLoading: Bool = false
     let alarmEngine = AlarmEngine()
+    let sharedAlarmStore = SharedAlarmStore.shared
     
-    func loadAlarms() async throws {
-        do {
-            // in here would call a method to load the alarms from the user's storage
-            
-        } catch {
-            
-        }
+    func loadAlarms() async {
+        await sharedAlarmStore.refreshRemoteAlarms()
     }
     
     /**
@@ -29,19 +24,21 @@ final class AlarmViewModel {
      */
     func requestAuthorization() async {
         alarmAuthState = await alarmEngine.checkAuthorization()
+        await loadAlarms()
     }
     
     /**
      Method for creating an alarm
      */
-    func createAlarm() async {
+    func createAlarm(at selectedDate: Date) async {
         do {
             isLoading = true
-            try await alarmEngine.scheduleSingleAlarm()
+            try await alarmEngine.scheduleSingleAlarm(at: selectedDate)
+            await loadAlarms()
             print("Alarm created")
             isLoading = false
         } catch {
-            print(error)
+            print(error.localizedDescription)
             isLoading = false
             
         }

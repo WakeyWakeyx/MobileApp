@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AlarmView: View {
     @Environment(AlarmViewModel.self) var alarmVM
+    @Environment(SharedAlarmStore.self) var sharedAlarmStore
     @State private var earliestTime: Date = Date()
     @State private var latestTime: Date = Date()
     
@@ -27,7 +28,9 @@ struct AlarmView: View {
             datePickers
             
             alarmStatus
-            
+
+            scheduledAlarms
+             
             scheduleAlarmButton
             
             Spacer()
@@ -49,10 +52,16 @@ struct AlarmView: View {
     
     
     private var alarmStatus: some View {
-        Text("status: \(alarmVM.alarmAuthState.rawValue)")
-            .font(.largeTitle)
-            .padding()
-            .foregroundStyle(.primary)
+        VStack(spacing: 8) {
+            Text("status: \(alarmVM.alarmAuthState.rawValue)")
+                .font(.title2)
+                .foregroundStyle(.primary)
+
+            Text("scheduled alarms: \(sharedAlarmStore.runningAlarms.count)")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .padding()
     }
     
     private var timeWindowView: some View {
@@ -143,9 +152,44 @@ struct AlarmView: View {
     private var scheduleAlarmButton: some View {
         Button("Set Alarm") {
             Task {
-                await alarmVM.createAlarm()
+                await alarmVM.createAlarm(at: latestTime)
             }
         }
+        .buttonStyle(.borderedProminent)
+        .padding(.top, 8)
+    }
+
+    private var scheduledAlarms: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Scheduled in Somni")
+                .font(.headline)
+
+            if sharedAlarmStore.runningAlarms.isEmpty {
+                Text("No alarms scheduled yet.")
+                    .foregroundStyle(.secondary)
+            } else {
+                ForEach(sharedAlarmStore.runningAlarms) { alarm in
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(alarm.title)
+                            .font(.body.weight(.semibold))
+                        if let fireDate = alarm.fireDate {
+                            Text(fireDate.formatted(date: .omitted, time: .shortened))
+                                .foregroundStyle(.secondary)
+                        }
+                        Text(alarm.state)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color(.systemGray6).opacity(0.5))
+                    )
+                }
+            }
+        }
+        .padding(.horizontal)
     }
     
     
