@@ -9,7 +9,7 @@ import Foundation
 import AlarmKit
 
 @Observable
-final class AlarmService {
+final class AlarmViewModel {
     var alarmAuthState: AlarmStates = AlarmStates.unknown
     var alarms: [Alarm] = []
     var isLoading: Bool = false

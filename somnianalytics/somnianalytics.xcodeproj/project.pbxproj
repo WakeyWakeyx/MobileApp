@@ -6,6 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B7A63FF92F8D43B4001060B5 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B7F946562F0C9F080022A39B /* somnianalytics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = somnianalytics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -68,6 +81,7 @@
 				B7F946522F0C9F080022A39B /* Sources */,
 				B7F946532F0C9F080022A39B /* Frameworks */,
 				B7F946542F0C9F080022A39B /* Resources */,
+				B7A63FF92F8D43B4001060B5 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);

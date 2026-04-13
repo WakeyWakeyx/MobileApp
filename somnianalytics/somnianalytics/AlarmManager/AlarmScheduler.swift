@@ -55,8 +55,9 @@ public func scheduleAlarm(userId: Int) async throws {
     let alarmConfiguration = AlarmConfiguration(countdownDuration: duration, attributes: attributes)
     do {
         try await AlarmManager.shared.schedule(id: id, configuration: alarmConfiguration)
-    } catch {
-        throw AlarmErrors.alarmSchedulingError
+    } catch  {
+        print("alarm scheduling error: \(error)")
+        throw error
     }
     
 }

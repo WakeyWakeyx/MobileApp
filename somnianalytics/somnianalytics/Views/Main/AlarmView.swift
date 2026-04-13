@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AlarmView: View {
-    @Environment(AlarmService.self) var alarmService
+    @Environment(AlarmViewModel.self) var alarmVM
     @State private var earliestTime: Date = Date()
     @State private var latestTime: Date = Date()
     
@@ -37,11 +37,11 @@ struct AlarmView: View {
         .navigationBarTitleDisplayMode(.large)
         .onAppear(perform: {
             Task{
-                await alarmService.requestAuthorization()
+                await alarmVM.requestAuthorization()
             }
         })
         .overlay {
-            if alarmService.isLoading {
+            if alarmVM.isLoading {
                 LoadingView()
             }
         }
@@ -49,7 +49,7 @@ struct AlarmView: View {
     
     
     private var alarmStatus: some View {
-        Text("status: \(alarmService.alarmAuthState.rawValue)")
+        Text("status: \(alarmVM.alarmAuthState.rawValue)")
             .font(.largeTitle)
             .padding()
             .foregroundStyle(.primary)
@@ -143,7 +143,7 @@ struct AlarmView: View {
     private var scheduleAlarmButton: some View {
         Button("Set Alarm") {
             Task {
-                await alarmService.createAlarm()
+                await alarmVM.createAlarm()
             }
         }
     }
