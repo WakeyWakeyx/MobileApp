@@ -15,6 +15,12 @@ final class AlarmViewModel {
     let alarmEngine = AlarmEngine()
     let sharedAlarmStore = SharedAlarmStore.shared
     
+    // default values until user changes values 
+    var earliestTime: Date = Calendar.current.date(bySettingHour: 6, minute: 15, second: 0, of: Date()) ?? Date()
+    var latestTime: Date = Calendar.current.date(bySettingHour: 6, minute: 45, second: 0, of: Date()) ?? Date()
+    var alarmIsEnabled: Bool = false
+    var alarmIsSet: Bool = false
+    
     func loadAlarms() async {
         await sharedAlarmStore.refreshRemoteAlarms()
     }

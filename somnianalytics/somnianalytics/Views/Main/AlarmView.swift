@@ -10,13 +10,8 @@ import SwiftUI
 struct AlarmView: View {
     @Environment(AlarmViewModel.self) var alarmVM
     @Environment(SharedAlarmStore.self) var sharedAlarmStore
-    @State private var earliestTime: Date = Date()
-    @State private var latestTime: Date = Date()
-
-    @State private var alarmEnabled = true
     @State private var showEarliestPicker = false
     @State private var showLatestPicker = false
-    @State private var alarmIsSet = false
 
     @State private var monday = true
     @State private var tuesday = true
@@ -30,7 +25,7 @@ struct AlarmView: View {
 
     // computed value for the window minutes diff
     private var windowMinutes: Int {
-        let diff = latestTime.timeIntervalSince(earliestTime)
+        let diff = alarmVM.latestTime.timeIntervalSince(alarmVM.earliestTime)
         return max(Int(diff / 60), 0)
     }
 
@@ -52,6 +47,7 @@ struct AlarmView: View {
     }
 
     var body: some View {
+        @Bindable var vm = alarmVM
         ZStack {
             Color.black.ignoresSafeArea()
 
@@ -68,17 +64,17 @@ struct AlarmView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
-                    header
+                    header(isEnabled: $vm.alarmIsEnabled)
 
-                    if alarmEnabled {
+                    if alarmVM.alarmIsEnabled {
                         bellIcon
                         headerText
 
-                        if alarmIsSet {
+                        if alarmVM.alarmIsSet {
                             alarmConfirmationCard
                             editAlarmButton
                         } else {
-                            timeWindowView
+                            timeWindowView(earliestBinding: $vm.earliestTime, latestBinding: $vm.latestTime)
                             scheduleAlarmButton
                         }
 
@@ -106,7 +102,7 @@ struct AlarmView: View {
         }
     }
 
-    private var header: some View {
+    private func header(isEnabled: Binding<Bool>) -> some View {
         HStack {
             Text("Alarm")
                 .font(.system(size: 30, weight: .bold))
@@ -114,7 +110,7 @@ struct AlarmView: View {
 
             Spacer()
 
-            Toggle("", isOn: $alarmEnabled)
+            Toggle("", isOn: isEnabled)
                 .tint(purple)
                 .scaleEffect(1.1)
         }
@@ -127,7 +123,7 @@ struct AlarmView: View {
                 .fill(purple.opacity(0.2))
                 .frame(width: 70, height: 70)
 
-            Image(systemName: alarmIsSet ? "bell.badge.fill" : "bell.fill")
+            Image(systemName: alarmVM.alarmIsSet ? "bell.badge.fill" : "bell.fill")
                 .font(.system(size: 30))
                 .foregroundColor(purple)
         }
@@ -145,7 +141,7 @@ struct AlarmView: View {
     }
 
     private var alarmConfirmationCard: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 20) {
             HStack(spacing: 8) {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 16))
@@ -158,13 +154,13 @@ struct AlarmView: View {
             Divider()
                 .background(Color.white.opacity(0.1))
 
-            VStack(spacing: 4) {
+            VStack(spacing: 12) {
                 Text("Wake window")
                     .font(.system(size: 16))
                     .foregroundColor(Color.white.opacity(0.4))
 
                 HStack(spacing: 12) {
-                    Text("\(formattedTime(earliestTime)) \(amPM(earliestTime))")
+                    Text("\(formattedTime(alarmVM.earliestTime)) \(amPM(alarmVM.earliestTime))")
                         .font(.system(size: 35, weight: .bold))
                         .foregroundColor(.white)
 
@@ -172,14 +168,14 @@ struct AlarmView: View {
                         .font(.system(size: 14))
                         .foregroundColor(Color.white.opacity(0.4))
 
-                    Text("\(formattedTime(latestTime)) \(amPM(latestTime))")
+                    Text("\(formattedTime(alarmVM.latestTime)) \(amPM(alarmVM.latestTime))")
                         .font(.system(size: 35, weight: .bold))
                         .foregroundColor(.white)
                 }
 
                 Text(windowMinutes.description + " minutes")
                     .font(.system(size: 16))
-                    .foregroundColor(Color.white.opacity(0.4))
+                    .foregroundColor(purple)
                     .padding(.top, 8)
             }
         }
@@ -192,7 +188,7 @@ struct AlarmView: View {
     // TODO: Implement a delete alarm feature
     private var editAlarmButton: some View {
         Button(action: {
-            alarmIsSet = false
+            alarmVM.alarmIsSet = false
         }) {
             Text("Edit Alarm")
                 .font(.system(size: 17, weight: .semibold))
@@ -204,7 +200,7 @@ struct AlarmView: View {
         }
     }
 
-    private var timeWindowView: some View {
+    private func timeWindowView(earliestBinding: Binding<Date>, latestBinding: Binding<Date>) -> some View {
         VStack(spacing: 12) {
             Text("Wake window")
                 .font(.system(size: 14))
@@ -217,7 +213,7 @@ struct AlarmView: View {
                         showEarliestPicker.toggle()
                     }
                 }) {
-                    Text("\(formattedTime(earliestTime)) \(amPM(earliestTime))")
+                    Text("\(formattedTime(alarmVM.earliestTime)) \(amPM(alarmVM.earliestTime))")
                         .font(.system(size: 30, weight: .bold))
                         .foregroundColor(showEarliestPicker ? purple : .white)
                         .lineLimit(1)
@@ -235,7 +231,7 @@ struct AlarmView: View {
                         showLatestPicker.toggle()
                     }
                 }) {
-                    Text("\(formattedTime(latestTime)) \(amPM(latestTime))")
+                    Text("\(formattedTime(alarmVM.latestTime)) \(amPM(alarmVM.latestTime))")
                         .font(.system(size: 30, weight: .bold))
                         .foregroundColor(showLatestPicker ? purple : .white)
                         .lineLimit(1)
@@ -260,7 +256,7 @@ struct AlarmView: View {
                     Text("Earliest")
                         .font(.system(size: 12))
                         .foregroundColor(purple)
-                    DatePicker("", selection: $earliestTime, displayedComponents: .hourAndMinute)
+                    DatePicker("", selection: earliestBinding, displayedComponents: .hourAndMinute)
                         .datePickerStyle(.wheel)
                         .labelsHidden()
                         .tint(purple)
@@ -275,7 +271,7 @@ struct AlarmView: View {
                     Text("Latest")
                         .font(.system(size: 12))
                         .foregroundColor(purple)
-                    DatePicker("", selection: $latestTime, displayedComponents: .hourAndMinute)
+                    DatePicker("", selection: latestBinding, displayedComponents: .hourAndMinute)
                         .datePickerStyle(.wheel)
                         .labelsHidden()
                         .tint(purple)
@@ -402,8 +398,8 @@ struct AlarmView: View {
         Button(action: {
             dismissPickers()
             Task {
-                await alarmVM.createAlarm(at: latestTime)
-                alarmIsSet = true
+                await alarmVM.createAlarm(at: alarmVM.latestTime)
+                alarmVM.alarmIsSet = true
             }
         }) {
             Text("Set Alarm")
@@ -444,6 +440,6 @@ struct AlarmView: View {
     }
 }
 
-#Preview {
-    AlarmView()
-}
+//#Preview {
+//    AlarmView()
+//}

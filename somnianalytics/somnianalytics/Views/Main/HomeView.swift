@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(Router.self) private var router
+    @Environment(AlarmViewModel.self) private var alarmVM
 
     private let purple = Color(red: 0.55, green: 0.35, blue: 0.95)
 
@@ -46,9 +47,9 @@ struct HomeView: View {
                     )
 
                     NextAlarmCard(
-                        alarmStart: mockAlarmStart,
-                        alarmEnd: mockAlarmEnd,
-                        isEnabled: true
+                        alarmStart: alarmVM.earliestTime,
+                        alarmEnd: alarmVM.latestTime,
+                        isEnabled: alarmVM.alarmIsSet && alarmVM.alarmIsEnabled
                     )
 
                     SleepSummaryCard(

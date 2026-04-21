@@ -17,6 +17,8 @@ struct RootTabView: View {
             Tab("Home", systemImage: "house", value: TabDestination.home) {
                 NavigationContainer(parentRouter: router, tab: .home) {
                     HomeView()
+                        .environment(alarmVM)
+                        .environment(sharedAlarmStore)
                 }
             }
             
