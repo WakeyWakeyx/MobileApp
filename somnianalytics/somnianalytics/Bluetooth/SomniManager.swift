@@ -141,7 +141,7 @@ extension SomniManager: CBPeripheralDelegate {
             debugPrint("Received Json: \(strings ?? "<ERROR>")")
             let metrics = try JSONDecoder().decode(SensorMetricsDto.self, from: data).toSensorMetrics()
             self.metrics = metrics
-            //context.insert(metrics)
+            context.insert(metrics)
         } catch {
             fatalError("Failed to decode sensor metrics")
             //TODO
