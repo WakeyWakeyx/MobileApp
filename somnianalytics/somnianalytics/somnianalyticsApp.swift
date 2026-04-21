@@ -45,6 +45,7 @@ struct somnianalyticsApp: App {
         }
         .environment(authVM)
         .environment(router)
+        .environment(deviceManager)
         .modelContext(modelContext)
     }
 }
