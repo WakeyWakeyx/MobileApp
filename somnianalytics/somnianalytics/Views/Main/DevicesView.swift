@@ -3,7 +3,7 @@ import SwiftUI
 
 struct DevicesView: View {
     @Environment(Router.self) private var router: Router
-    @State var ble: SomniManager = SomniManager()
+    @Environment(SomniManager.self) private var ble: SomniManager
     
     var body: some View {
         VStack(alignment: .leading) {

@@ -17,10 +17,10 @@ class SomniManager: NSObject {
     private(set) var scanning: Bool = false
     
     /// The SwiftData ModelContext for locally storing sensor metrics as they are received.
-    //private let context: ModelContext
+    private let context: ModelContext
     
-    override init(/*context: ModelContext*/) {
-        //self.context = context
+    init(context: ModelContext) {
+        self.context = context
         super.init()
         self.manager = CBCentralManager(delegate: self, queue: nil)
     }
