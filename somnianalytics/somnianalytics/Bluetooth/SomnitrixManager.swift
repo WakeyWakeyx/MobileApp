@@ -5,17 +5,17 @@ import CoreBluetooth
 import Foundation
 import SwiftData
 
+/// Class responsible for managing the connection to Somnitrix devices and receiving data packets from them.
 @MainActor @Observable
 class SomnitrixManager: NSObject {
     /// The CBCentralManager we use for handling BLE connections with the hardware.
     private var manager: CBCentralManager!
-    
-    /// The currently connected wearable device, or nil if no device has been connected yet
+    /// The currently discovered Somnitrix devices when scanning for them.
     private(set) var discovered: [Somnitrix] = []
+    /// The currently connected Somnitrix device, or nil if no device has been connected yet
     private(set) var connected: Somnitrix? = nil
-    private(set) var metrics: SensorMetrics? = nil
+    /// Is this SomnitrixManager currently scanning for devices?
     private(set) var scanning: Bool = false
-    
     /// The SwiftData ModelContext for locally storing sensor metrics as they are received.
     private let context: ModelContext
     
@@ -143,7 +143,6 @@ extension SomnitrixManager: CBPeripheralDelegate {
             let strings = String(data: data, encoding: .utf8)
             debugPrint("Received Json: \(strings ?? "<ERROR>")")
             let metrics = try JSONDecoder().decode(SensorMetricsDto.self, from: data).toSensorMetrics()
-            self.metrics = metrics
             context.insert(metrics)
         } catch {
             fatalError("Failed to decode sensor metrics")
