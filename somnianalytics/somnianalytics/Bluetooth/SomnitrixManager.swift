@@ -6,7 +6,7 @@ import Foundation
 import SwiftData
 
 @MainActor @Observable
-class SomniManager: NSObject {
+class SomnitrixManager: NSObject {
     /// The CBCentralManager we use for handling BLE connections with the hardware.
     private var manager: CBCentralManager!
     
@@ -65,7 +65,7 @@ class SomniManager: NSObject {
     }
 }
 
-extension SomniManager: CBCentralManagerDelegate {
+extension SomnitrixManager: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         guard connected == nil && central.state == .poweredOn else { return }
         discover()
@@ -99,7 +99,7 @@ extension SomniManager: CBCentralManagerDelegate {
     }
 }
 
-extension SomniManager: CBPeripheralDelegate {
+extension SomnitrixManager: CBPeripheralDelegate {
     /// Called when the services advertised by a peripheral have been discovered.
     func peripheral(
         _ peripheral: CBPeripheral,

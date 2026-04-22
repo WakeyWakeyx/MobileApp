@@ -13,7 +13,7 @@ struct somnianalyticsApp: App {
     @State private var authVM = AuthViewModel()
     @State private var router = Router(level: 0, identifierTab: nil)
     @State private var modelContext: ModelContext
-    @State private var deviceManager: SomniManager
+    @State private var deviceManager: SomnitrixManager
     
     init() {
         do {
@@ -22,7 +22,7 @@ struct somnianalyticsApp: App {
             )
             let context = ModelContext(container)
             self.modelContext = context
-            self.deviceManager = SomniManager(context: context)
+            self.deviceManager = SomnitrixManager(context: context)
         } catch {
             //TODO: recovery
             fatalError("Unable to create model context")
