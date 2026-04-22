@@ -18,7 +18,7 @@ struct somnianalyticsApp: App {
     init() {
         do {
             let container = try ModelContainer(
-                for: SensorMetrics.self, AccelerometerMetrics.self,
+                for: Metrics.self,
             )
             let context = ModelContext(container)
             self.modelContext = context

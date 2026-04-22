@@ -142,7 +142,7 @@ extension SomnitrixManager: CBPeripheralDelegate {
             debugPrint("Received Metrics For: \(characteristic.uuid.uuidString)")
             let strings = String(data: data, encoding: .utf8)
             debugPrint("Received Json: \(strings ?? "<ERROR>")")
-            let metrics = try JSONDecoder().decode(SensorMetricsDto.self, from: data).toSensorMetrics()
+            let metrics = try JSONDecoder().decode(MetricsPacket.self, from: data).toModel()
             context.insert(metrics)
         } catch {
             fatalError("Failed to decode sensor metrics")
