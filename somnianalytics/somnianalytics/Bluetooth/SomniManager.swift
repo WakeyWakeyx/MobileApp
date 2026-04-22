@@ -29,43 +29,46 @@ class SomniManager: NSObject {
     /// By default, this filters out any devices that don't have the same UUID as
     /// the wearable we have created.
     func discover() {
-        //manager.scanForPeripherals(withServices: [Somnitrix.SERVICE_UUID])
-        manager.scanForPeripherals(withServices: nil)
+        manager.scanForPeripherals(withServices: [Somnitrix.SERVICE_UUID])
         self.scanning = true
     }
     
+    /// Connects to the specified, previously-discovered Somnitrix device.
+    /// NOTE: This method also stops further scanning of Bluetooth devices.
     func connect(device: Somnitrix) {
         manager.stopScan()
         manager.connect(device.peripheral)
         device.peripheral.delegate = self
         self.scanning = false
         self.connected = device
+        self.discovered.removeAll()
     }
     
     /// Disconnects the currently connected device, if any, and unsubscribes from any
     /// additional bluetooth reception events.
     func disconnect() {
-        if let connected = connected {
-            manager.cancelPeripheralConnection(connected.peripheral)
-            connected.peripheral.delegate = nil
-            connected.peripheral.services?
-                .filter { $0.uuid == Somnitrix.SERVICE_UUID }
-                .flatMap { $0.characteristics ?? [] }
-                .filter { $0.uuid == Somnitrix.TRANSMITTER_UUID }
-                .forEach { connected.peripheral.setNotifyValue(false, for: $0) }
-            self.connected = nil
-        }
+        // Ensure that we are already connected to a somnitrix before proceding.
+        guard let peripheral = connected?.peripheral else { return }
+        guard peripheral.state == .connected else { return }
+        
+        // Unsubscribe from transmitter characteristics (should really only be 1).
+        peripheral.services?
+            .filter { $0.uuid == Somnitrix.SERVICE_UUID }
+            .flatMap { $0.characteristics ?? [] }
+            .filter { $0.uuid == Somnitrix.TRANSMITTER_UUID }
+            .forEach { peripheral.setNotifyValue(false, for: $0) }
+        
+        // Finally, cleanup and sever the connection with the manager.
+        self.connected = nil
+        peripheral.delegate = nil
+        manager.cancelPeripheralConnection(peripheral)
     }
 }
 
 extension SomniManager: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        switch central.state {
-        case .poweredOn:
-            discover()
-        default:
-            break
-        }
+        guard connected == nil && central.state == .poweredOn else { return }
+        discover()
     }
     
     /// Called when a new Bluetooth device is discovered.

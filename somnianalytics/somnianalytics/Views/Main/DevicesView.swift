@@ -14,6 +14,7 @@ struct DevicesView: View {
                     .multilineTextAlignment(.center)
                 InfoItem(title: "Device Name", value: somnitrix.name)
                 InfoItem(title: "Device UUID", value: somnitrix.id.uuidString)
+                Button("Disconnect", action: { ble.disconnect() })
             } else {
                 Text("Like you're not connected to a Somnitrix device. Please choose from one of the below devices and connec to it.")
                     .font(.subheadline)
