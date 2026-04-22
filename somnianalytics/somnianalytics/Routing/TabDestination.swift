@@ -13,4 +13,5 @@ enum TabDestination: String, Hashable {
     case details
     case history
     case alarm
+    case devices
 }

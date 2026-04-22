@@ -39,6 +39,12 @@ struct RootTabView: View {
                         .environment(sharedAlarmStore)
                 }
             }
+            
+            Tab("Devices", systemImage: "gear", value: TabDestination.devices) {
+                NavigationContainer(parentRouter: router, tab: .devices) {
+                    DevicesView()
+                }
+            }
         }
     }
 }
