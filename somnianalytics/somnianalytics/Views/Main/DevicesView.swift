@@ -1,4 +1,3 @@
-import CoreBluetooth
 import Foundation
 import SwiftUI
 
@@ -66,31 +65,7 @@ struct DevicesView: View {
                             }
                         }
 
-                    } else if ble.state == .poweredOff {
-                        // Bluetooth is disabled
-                        VStack(spacing: 12) {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.white.opacity(0.05))
-                                    .frame(width: 70, height: 70)
-                                Image(systemName: "antenna.radiowaves.left.and.right")
-                                    .font(.system(size: 28))
-                                    .foregroundColor(Color.white.opacity(0.3))
-                            }
-                            .padding(.top, 40)
-
-                            Text("Bluetooth Disabled")
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(Color.white.opacity(0.3))
-
-                            Text("Make sure you have Bluetooth enabled on your iPhone device.")
-                                .font(.system(size: 14))
-                                .foregroundColor(Color.white.opacity(0.2))
-                                .multilineTextAlignment(.center)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(32)
-                    } else if ble.state == .poweredOn && ble.discovered.isEmpty {
+                    } else if ble.discovered.isEmpty {
                         // No devices found
                         VStack(spacing: 12) {
                             ZStack {
