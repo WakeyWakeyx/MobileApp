@@ -42,6 +42,7 @@ struct RootTabView: View {
                 }
             }
         }
+        .tint(Color(red: 0.55, green: 0.35, blue: 0.95))
     }
 }
 
