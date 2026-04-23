@@ -31,12 +31,9 @@ struct somnianalyticsApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if true {
+            if authVM.isAuthenticated {
                 RootTabView()
             }
-//            if authVM.isAuthenticated {
-//                RootTabView()
-//            }
             else {
                 NavigationContainer(parentRouter: router) {
                     AuthEntryView()

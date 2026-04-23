@@ -10,9 +10,9 @@ import SwiftUI
 struct HomeView: View {
     @Environment(Router.self) private var router
     @Environment(AlarmViewModel.self) private var alarmVM
-
+    @Environment(AuthViewModel.self) private var authVM
     private let purple = Color(red: 0.55, green: 0.35, blue: 0.95)
-
+    @State private var showModal: Bool = false
     // Mock data for now
     private let mockSleepStart = Calendar.current.date(bySettingHour: 22, minute: 0, second: 0, of: Date()) ?? Date()
     private let mockWakeUpTime = Calendar.current.date(bySettingHour: 6, minute: 42, second: 0, of: Date()) ?? Date()
@@ -61,6 +61,9 @@ struct HomeView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 32)
             }
+            .sheet(isPresented: $showModal) {
+                settingsModal
+            }
         }
     }
 
@@ -79,9 +82,10 @@ struct HomeView: View {
             }
 
             Spacer()
-
+            
             Button(action: {
                 // TODO: Navigate to profile page
+                showModal.toggle()
             }) {
                 ZStack {
                     Circle()
@@ -95,6 +99,24 @@ struct HomeView: View {
             }
         }
         .padding(.top, 16)
+    }
+    
+    private var settingsModal: some View {
+        VStack(alignment: .center) {
+            Text("User Settings")
+                .font(.title)
+                .fontWeight(.bold)
+            
+            Button(action: {
+                authVM.authState = AuthState.unauthenticated
+            }) {
+                Text("Sign out")
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundColor(purple)
+                    .frame(maxWidth: .infinity, alignment: .center)
+            }
+        }
+        
     }
 }
 

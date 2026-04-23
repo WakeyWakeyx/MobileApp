@@ -24,7 +24,7 @@ class AuthViewModel {
             isLoading = true
             try await authService.signUpUser(for: signUpRequest)
             authState = .authenticated
-            isLoading = true
+            isLoading = false
         } catch {
             authState = .unauthenticated
             isLoading = false
