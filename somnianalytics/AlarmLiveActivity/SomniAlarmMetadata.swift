@@ -2,7 +2,6 @@
 //  SomniAlarmMetadata.swift
 //  AlarmLiveActivity
 //
-//  Created by OpenCode on 4/13/26.
 //
 
 import AlarmKit
