@@ -16,6 +16,8 @@ class SomnitrixManager: NSObject {
     private(set) var connected: Somnitrix? = nil
     /// Is this SomnitrixManager currently scanning for devices?
     private(set) var scanning: Bool = false
+    /// The current state of  the underlying CBCentralManager.
+    private(set) var state: CBManagerState = .unknown
     /// The SwiftData ModelContext for locally storing sensor metrics as they are received.
     private let context: ModelContext
     
@@ -67,6 +69,7 @@ class SomnitrixManager: NSObject {
 
 extension SomnitrixManager: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        self.state = central.state
         guard connected == nil && central.state == .poweredOn else { return }
         discover()
     }
