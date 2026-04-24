@@ -2,6 +2,7 @@
 // There has to be something I missed here.
 
 import CoreBluetooth
+import CoreML
 import Foundation
 import SwiftData
 
@@ -150,7 +151,7 @@ extension SomnitrixManager: CBPeripheralDelegate {
             let packet = try JSONDecoder().decode(MetricsPacket.self, from: data)
             predictionManager?.ingest(packet: packet)
             let metrics = packet.toModel()
-            context.insert(metrics)
+            //context.insert(metrics)
         } catch {
             fatalError("Failed to decode sensor metrics")
             //TODO

@@ -67,7 +67,7 @@ struct PredictionResultsCard: View {
                 .frame(height: 10)
             }
 
-            if let prediction {
+            /*if let prediction {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Probabilities")
                         .font(.system(size: 15, weight: .semibold))
@@ -98,7 +98,7 @@ struct PredictionResultsCard: View {
                         }
                     }
                 }
-            }
+            }*/
 
             VStack(alignment: .leading, spacing: 12) {
                 Text("Latest Sensor Packet")
@@ -107,8 +107,8 @@ struct PredictionResultsCard: View {
 
                 if let latestData {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                        metricTile(title: "Temp", value: String(format: "%.2f", latestData.temperature))
-                        metricTile(title: "Heart Rate", value: String(format: "%.0f", latestData.heartRate))
+                        metricTile(title: "Temp", value: String(format: "%.2f °C", latestData.temperature))
+                        metricTile(title: "Heart Rate", value: String(format: "%.0f bpm", latestData.heartRate))
                         metricTile(title: "Acc X", value: String(format: "%.0f", latestData.accX))
                         metricTile(title: "Acc Y", value: String(format: "%.0f", latestData.accY))
                         metricTile(title: "Acc Z", value: String(format: "%.0f", latestData.accZ))

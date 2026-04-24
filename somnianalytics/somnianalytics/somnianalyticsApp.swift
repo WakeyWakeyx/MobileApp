@@ -33,7 +33,7 @@ struct somnianalyticsApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if authVM.isAuthenticated {
+                if true {
                     RootTabView()
                 }
                 else {

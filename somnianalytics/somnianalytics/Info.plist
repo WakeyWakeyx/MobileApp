@@ -4,5 +4,13 @@
 <dict>
 	<key>NSAlarmKitUsageDescription</key>
 	<string>We will schedule alarms for you so you wake up at an optimal time. </string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-peripheral</string>
+		<string>fetch</string>
+		<string>processing</string>
+		<string>external-accessory</string>
+		<string>bluetooth-central</string>
+	</array>
 </dict>
 </plist>
