@@ -267,7 +267,7 @@
 				CODE_SIGN_ENTITLEMENTS = AlarmLiveActivityExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = R35FPA98QP;
+				DEVELOPMENT_TEAM = B78BPGB657;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AlarmLiveActivity/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AlarmLiveActivity;
@@ -278,7 +278,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.somni.somnianalytics2.AlarmLiveActivity2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.somni.somnianalytics.AlarmLiveActivity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -450,7 +450,7 @@
 				CODE_SIGN_ENTITLEMENTS = somnianalytics/somnianalytics.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = R35FPA98QP;
+				DEVELOPMENT_TEAM = B78BPGB657;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = somnianalytics/Info.plist;
@@ -466,7 +466,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.somni.somnianalytics2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.somni.somnianalytics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
