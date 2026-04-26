@@ -12,6 +12,7 @@ import SwiftUI
 struct somnianalyticsApp: App {
     @State private var authVM = AuthViewModel()
     @State private var router = Router(level: 0, identifierTab: nil)
+    @State private var predictionManager = MLModel_Manager()
     @State private var modelContext: ModelContext
     @State private var deviceManager: SomnitrixManager
     
@@ -31,18 +32,24 @@ struct somnianalyticsApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if authVM.isAuthenticated {
-                RootTabView()
-            }
-            else {
-                NavigationContainer(parentRouter: router) {
-                    AuthEntryView()
+            Group {
+                if authVM.isAuthenticated {
+                    RootTabView()
                 }
+                else {
+                    NavigationContainer(parentRouter: router) {
+                        AuthEntryView()
+                    }
+                }
+            }
+            .onAppear {
+                deviceManager.setPredictionManager(predictionManager)
             }
         }
         .environment(authVM)
         .environment(router)
         .environment(deviceManager)
+        .environment(predictionManager)
         .modelContext(modelContext)
     }
 }

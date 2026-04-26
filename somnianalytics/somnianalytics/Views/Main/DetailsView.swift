@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DetailsView: View {
+    @Environment(MLModel_Manager.self) private var predictionManager
     
     // Mock sleep start and sleep end data
     private let mockSleepStart = Calendar.current.date(bySettingHour: 23, minute: 0, second: 0, of: Date()) ?? Date()
@@ -57,10 +58,17 @@ struct DetailsView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("Sleep Details")
-                        .font(.system(size: 30, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding(.top, 16)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Sleep Details")
+                            .font(.system(size: 30, weight: .bold))
+                            .foregroundColor(.white)
+
+                        Text("Review your overnight summary, heart rate trends, and the latest live sleep-stage prediction generated from incoming Somnitrix data.")
+                            .font(.system(size: 14))
+                            .foregroundColor(Color.white.opacity(0.6))
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(.top, 16)
 
                     Text("Total Sleep")
                         .font(.system(size: 20, weight: .semibold))
@@ -91,6 +99,20 @@ struct DetailsView: View {
                         data: mockHeartRateData,
                         avgBPM: 57,
                         restingBPM: 45
+                    )
+
+                    Text("Model Output")
+                        .font(.system(size: 20, weight: .semibold))
+                        .foregroundColor(.white)
+
+                    PredictionResultsCard(
+                        prediction: predictionManager.latestPrediction,
+                        latestData: predictionManager.latestReceivedData,
+                        isModelLoaded: predictionManager.isModelLoaded,
+                        bufferProgress: predictionManager.bufferProgress,
+                        bufferedSampleCount: predictionManager.bufferedSampleCount,
+                        requiredSampleCount: predictionManager.requiredSamplesForPrediction,
+                        latestError: predictionManager.latestError
                     )
                 }
                 .padding(.horizontal, 20)

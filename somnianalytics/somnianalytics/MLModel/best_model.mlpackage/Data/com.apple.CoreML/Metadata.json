@@ -1,0 +1,18 @@
+{
+  "MLModelDescriptionKey" : "Ternary sleep-stage classifier (Awake \/ Light Sleep \/ Deep Sleep) with 15-epoch context (450s) of 5-channel (TEMP, ACC_X, ACC_Y, ACC_Z, HR) input at 64 Hz. Normalization is baked into the model.",
+  "MLModelCreatorDefinedKey" : {
+    "class_names" : "Awake,Light Sleep,Deep Sleep",
+    "raw_class_names" : "W,N1,N2,N3,R",
+    "com.github.apple.coremltools.version" : "9.0",
+    "context_length_epochs" : "15",
+    "center_epoch_seconds" : "30",
+    "com.github.apple.coremltools.conversion_date" : "2026-04-23",
+    "feature_columns" : "TEMP,ACC_X,ACC_Y,ACC_Z,HR",
+    "normalization_mean" : "34.70313263,-16.05357933,-12.21105957,21.01791000,68.61557770",
+    "sample_rate_hz" : "64",
+    "com.github.apple.coremltools.source_dialect" : "TorchScript",
+    "com.github.apple.coremltools.source" : "torch==2.11.0+cu128",
+    "normalization_std" : "1.14423072,36.13374329,31.67591667,31.51570892,12.66306496"
+  },
+  "MLModelAuthorKey" : "DREAMT Sleep Classifier"
+}

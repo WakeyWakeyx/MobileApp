@@ -1,0 +1,18 @@
+{
+  "Inputs" : {
+    "features" : {
+      "MLFeatureShortDescription" : "[1, 15, 5, 1920] raw (un-normalized) sensor window. Channel order: ['TEMP', 'ACC_X', 'ACC_Y', 'ACC_Z', 'HR']."
+    }
+  },
+  "Outputs" : {
+    "probabilities" : {
+      "MLFeatureShortDescription" : "Softmax probabilities over [Awake, Light Sleep, Deep Sleep]."
+    }
+  },
+  "TrainingInputs" : {
+
+  },
+  "States" : {
+
+  }
+}

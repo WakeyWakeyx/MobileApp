@@ -2,6 +2,7 @@
 // There has to be something I missed here.
 
 import CoreBluetooth
+import CoreML
 import Foundation
 import SwiftData
 
@@ -18,11 +19,16 @@ class SomnitrixManager: NSObject {
     private(set) var scanning: Bool = false
     /// The SwiftData ModelContext for locally storing sensor metrics as they are received.
     private let context: ModelContext
+    private var predictionManager: MLModel_Manager?
     
     init(context: ModelContext) {
         self.context = context
         super.init()
         self.manager = CBCentralManager(delegate: self, queue: nil)
+    }
+
+    func setPredictionManager(_ predictionManager: MLModel_Manager) {
+        self.predictionManager = predictionManager
     }
     
     /// Tells the underlying CBCentralManager to look for Bluetooth devices.
@@ -142,8 +148,10 @@ extension SomnitrixManager: CBPeripheralDelegate {
             debugPrint("Received Metrics For: \(characteristic.uuid.uuidString)")
             let strings = String(data: data, encoding: .utf8)
             debugPrint("Received Json: \(strings ?? "<ERROR>")")
-            let metrics = try JSONDecoder().decode(MetricsPacket.self, from: data).toModel()
-            context.insert(metrics)
+            let packet = try JSONDecoder().decode(MetricsPacket.self, from: data)
+            predictionManager?.ingest(packet: packet)
+            let metrics = packet.toModel()
+            //context.insert(metrics)
         } catch {
             fatalError("Failed to decode sensor metrics")
             //TODO
